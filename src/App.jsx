@@ -977,6 +977,7 @@ function Interaction() {
   const [isRecording, setIsRecording] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('en-US');
+  const [transcript, setTranscript] = useState('');
   const [formData, setFormData] = useState({
     story: '',
     name: '',
@@ -1002,17 +1003,11 @@ function Interaction() {
     window.location.href = `mailto:info@culturesphere.com.au?subject=${subject}&body=${body}`;
   };
 
-  // Enhanced Speech-to-text functionality with Tok Pisin support
+  // Simplified speech recognition
   const startRecording = () => {
-    // Check if browser supports speech recognition
+    // Check browser support
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('Speech-to-text is not supported in your browser. Please try Chrome, Edge, or Safari.');
-      return;
-    }
-
-    // Check if we're in a secure context (HTTPS)
-    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
-      alert('Microphone access requires a secure connection (HTTPS). Please use the secure version of this website.');
       return;
     }
 
@@ -1021,12 +1016,11 @@ function Interaction() {
     
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = selectedLanguage; // Use selected language (en-US or Tok Pisin)
+    recognition.lang = selectedLanguage;
     
     recognition.onstart = () => {
       setIsRecording(true);
-      setIsListening(true);
-      console.log('Speech recognition started with language:', selectedLanguage);
+      setTranscript('');
     };
     
     recognition.onresult = (event) => {
@@ -1036,64 +1030,36 @@ function Interaction() {
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
-          finalTranscript += transcript + ' ';
+          finalTranscript += transcript;
         } else {
           interimTranscript += transcript;
         }
       }
       
-      if (finalTranscript) {
-        setFormData(prev => ({
-          ...prev,
-          story: prev.story + finalTranscript
-        }));
-      }
+      setTranscript(finalTranscript + interimTranscript);
     };
     
     recognition.onerror = (event) => {
-      console.error('Speech recognition error:', event.error);
       setIsRecording(false);
-      setIsListening(false);
-      
-      // Handle specific errors with helpful messages
-      switch(event.error) {
-        case 'not-allowed':
-        case 'service-not-allowed':
-          alert('🎤 Microphone access was denied.\n\nTo enable speech-to-text:\n1. Click the microphone icon in your browser\'s address bar\n2. Select "Allow" or "Allow while using this site"\n3. Refresh the page and try again');
-          break;
-        case 'no-speech':
-          alert('🎤 No speech was detected.\n\nPlease:\n• Speak clearly and loudly\n• Ensure your microphone is working\n• Try clicking the button again');
-          break;
-        case 'network':
-          alert('🎤 Network error occurred.\n\nPlease check your internet connection and try again.');
-          break;
-        case 'audio-captured':
-          alert('🎤 Microphone is being used by another application.\n\nPlease close other apps using your microphone and try again.');
-          break;
-        default:
-          alert(`🎤 Speech recognition error: ${event.error}\n\nPlease try again or contact support if the problem persists.`);
-      }
+      const errorMessages = {
+        'no-speech': 'No speech detected. Please try speaking clearly.',
+        'audio-capture': 'Microphone access denied. Please allow microphone access.',
+        'not-allowed': 'Microphone access denied. Please allow microphone access.',
+        'network': 'Network error. Please check your internet connection.',
+        'service-not-allowed': 'Speech recognition service unavailable. Please try again later.'
+      };
+      alert(errorMessages[event.error] || `Speech recognition error: ${event.error}`);
     };
     
     recognition.onend = () => {
       setIsRecording(false);
-      setIsListening(false);
-      console.log('Speech recognition ended');
     };
     
-    // Start recognition
-    try {
-      recognition.start();
-    } catch (error) {
-      console.error('Failed to start recognition:', error);
-      alert('🎤 Failed to start speech recognition.\n\nPlease refresh the page and try again.');
-    }
+    recognition.start();
   };
   
   const stopRecording = () => {
     setIsRecording(false);
-    setIsListening(false);
-    // The recognition will stop automatically when onend is called
   };
 
   const requestMicrophoneAccess = async () => {
@@ -1118,159 +1084,54 @@ function Interaction() {
     }
   };
 
-  // Enhanced Tok Pisin text processing functions
+  // Simplified Tok Pisin processing
   const processTokPisinText = (text) => {
-    // Common Tok Pisin words and their spellings
-    const tokPisinWords = {
-      'yumi': 'yumi',
-      'mi': 'mi',
-      'yu': 'yu',
-      'long': 'long',
-      'bilong': 'bilong',
-      'wantok': 'wantok',
-      'lukim': 'lukim',
-      'go': 'go',
-      'kamap': 'kamap',
-      'stori': 'stori',
-      'pait': 'pait',
-      'gutpela': 'gutpela',
-      'gut': 'gut',
-      'nogut': 'nogut',
-      'tasol': 'tasol',
-      'olsem': 'olsem',
-      'wanpela': 'wanpela',
-      'tupela': 'tupela',
-      'tripela': 'tripela',
-      'fopela': 'fopela',
-      'fivpela': 'fivpela',
-      'siks': 'siks',
-      'sevenpela': 'sevenpela',
-      'etpela': 'etpela',
-      'nainpela': 'nainpela',
-      'tenpela': 'tenpela',
-      'elevenpela': 'elevenpela',
-      'twelvpela': 'twelvpela',
-      'thirpela': 'thirpela',
-      'fortin': 'fortin',
-      'fiftin': 'fiftin',
-      'sikstin': 'sikstin',
-      'seventin': 'seventin',
-      'eitin': 'eitin',
-      'naitin': 'naitin',
-      'aitin': 'aitin',
-      // Additional common words
-      'haus': 'haus',
-      'kaikai': 'kaikai',
-      'kisim': 'kisim',
-      'kisim bilong': 'kisim bilong',
-      'laikin': 'laikin',
-      'manmeri': 'manmeri',
-      'pikinini': 'pikinini',
-      'wok': 'wok',
-      'toktok': 'toktok',
-      'brata': 'brata',
-      'sista': 'sista',
-      'brata': 'brata',
-      'mama': 'mama',
-      'papa': 'papa',
-      'bikpela': 'bikpela',
-      'bikpela bilong': 'bikpela bilong',
-      'dispela': 'dispela',
-      'arere': 'arere',
-      'we': 'we',
-      'inap': 'inap',
-      'bikos': 'bikos',
-      'bikos bilong': 'bikos bilong',
-      'kain': 'kain',
-      'kain bilong': 'kain bilong',
-      'wara': 'wara',
-      'wara bilong': 'wara bilong',
-      'wele': 'wele',
-      'wele bilong': 'wele bilong',
-      'kisim': 'kisim',
-      'kisim bilong': 'kisim bilong',
-      'toktok': 'toktok',
-      'toktok bilong': 'toktok bilong',
-      'singsing': 'singsing',
-      'singsing bilong': 'singsing bilong',
-      'trabel': 'trabel',
-      'trabel bilong': 'trabel bilong',
-      'helpim': 'helpim',
-      'helpim bilong': 'helpim bilong',
-      'giaman': 'giaman',
-      'giaman bilong': 'giaman bilong',
-      'save': 'save',
-      'save bilong': 'save bilong',
-      'lukautim': 'lukautim',
-      'lukautim bilong': 'lukautim bilong',
-      'mekim': 'mekim',
-      'mekim bilong': 'mekim bilong',
-      'tokim': 'tokim',
-      'tokim bilong': 'tokim bilong',
-      'preim': 'preim',
-      'preim bilong': 'preim bilong',
-      'baimbai': 'baimbai',
-      'baimbai bilong': 'baimbai bilong',
-      'baimbai yu': 'baimbai yu',
-      'baimbai mi': 'baimbai mi',
-      'baimbai yumi': 'baimbai yumi'
+    if (!text) return '';
+    
+    // Common Tok Pisin corrections (simplified)
+    const corrections = {
+      'yumi': 'yumi', 'mi': 'mi', 'yu': 'yu', 'long': 'long', 'bilong': 'bilong',
+      'wantok': 'wantok', 'lukim': 'lukim', 'go': 'go', 'kamap': 'kamap',
+      'stori': 'stori', 'pait': 'pait', 'gutpela': 'gutpela', 'gut': 'gut',
+      'nogut': 'nogut', 'tasol': 'tasol', 'olsem': 'olsem',
+      'wanpela': 'wanpela', 'tupela': 'tupela', 'tripela': 'tripela',
+      'haus': 'haus', 'kaikai': 'kaikai', 'kisim': 'kisim', 'manmeri': 'manmeri',
+      'pikinini': 'pikinini', 'wok': 'wok', 'toktok': 'toktok', 'brata': 'brata',
+      'sista': 'sista', 'mama': 'mama', 'papa': 'papa', 'bikpela': 'bikpela',
+      'dispela': 'dispela', 'arere': 'arere', 'we': 'we', 'inap': 'inap',
+      'bikos': 'bikos', 'kain': 'kain', 'wara': 'wara', 'wele': 'wele',
+      'singsing': 'singsing', 'trabel': 'trabel', 'helpim': 'helpim',
+      'giaman': 'giaman', 'save': 'save', 'lukautim': 'lukautim',
+      'mekim': 'mekim', 'tokim': 'tokim', 'preim': 'preim', 'baimbai': 'baimbai'
     };
     
-    return text.toLowerCase().split(' ').map(word => {
-      // Check if the word matches any Tok Pisin word
-      for (const [correct, variant] of Object.entries(tokPisinWords)) {
-        if (word.toLowerCase().includes(variant) || word.toLowerCase().includes(correct)) {
-          return correct;
-        }
-      }
-      return word;
-    }).join(' ');
+    return text.toLowerCase().split(' ').map(word => 
+      corrections[word.trim()] || word
+    ).join(' ');
   };
 
   const addTokPisinPunctuation = (text) => {
-    // Add Tok Pisin appropriate punctuation
-    return text
-      .replace(/\?/g, ' ?')
-      .replace(/\!/g, ' !')
-      .replace(/\./g, ' .')
-      .replace(/,/g, ' ,')
-      .replace(/:/g, ' :')
-      .replace(/;/g, ' ;');
+    if (!text) return '';
+    return text.replace(/[?!.,:;]/g, match => ` ${match}`);
   };
 
   const detectLanguage = (text) => {
-    // Simple language detection based on Tok Pisin words
-    const tokPisinWords = ['yumi', 'mi', 'yu', 'long', 'bilong', 'wantok', 'lukim', 'go', 'kamap', 'stori', 'pait', 'gutpela', 'gut', 'nogut', 'tasol', 'olsem', 'wanpela', 'tupela', 'tripela', 'fopela', 'fivpela', 'siks', 'haus', 'kaikai', 'kisim', 'manmeri', 'pikinini', 'wok', 'toktok', 'brata', 'sista', 'mama', 'papa', 'bikpela', 'dispela', 'arere', 'we', 'inap', 'bikos', 'kain', 'wara', 'wele', 'kisim', 'toktok', 'singsing', 'trabel', 'helpim', 'giaman', 'save', 'lukautim', 'mekim', 'tokim', 'preim', 'baimbai'];
+    if (!text) return 'english';
     
-    const words = text.toLowerCase().split(' ');
+    // Simple Tok Pisin detection
+    const tokPisinWords = ['yumi', 'mi', 'yu', 'long', 'bilong', 'wantok', 'lukim', 'go', 'kamap', 'stori', 'pait', 'gutpela', 'gut', 'nogut', 'tasol', 'olsem', 'wanpela', 'tupela', 'tripela', 'haus', 'kaikai', 'kisim', 'manmeri', 'pikinini', 'wok', 'toktok', 'brata', 'sista', 'mama', 'papa', 'bikpela', 'dispela', 'arere', 'we', 'inap', 'bikos', 'kain', 'wara', 'wele', 'singsing', 'trabel', 'helpim', 'giaman', 'save', 'lukautim', 'mekim', 'tokim', 'preim', 'baimbai'];
+    
+    const words = text.toLowerCase().split(' ').filter(w => w.length > 0);
     const tokPisinCount = words.filter(word => tokPisinWords.includes(word)).length;
-    const totalWords = words.length;
     
-    // If more than 30% of words are Tok Pisin, consider it Tok Pisin
-    if (tokPisinCount / totalWords > 0.3) {
-      return 'tokpisin';
-    }
-    
-    // If common Tok Pisin patterns are found
-    if (text.toLowerCase().includes(' bilong') || text.toLowerCase().includes('pela') || text.toLowerCase().includes('tok')) {
-      return 'tokpisin';
-    }
-    
-    return 'english';
+    return words.length > 0 && tokPisinCount / words.length > 0.3 ? 'tokpisin' : 'english';
   };
 
   const smartProcessText = (text) => {
-    const detectedLanguage = detectLanguage(text);
+    if (!text) return '';
     
-    if (detectedLanguage === 'tokpisin') {
-      // Process as Tok Pisin
-      const processedText = processTokPisinText(text);
-      const formattedText = addTokPisinPunctuation(processedText);
-      return formattedText;
-    } else {
-      // Keep as English but add proper punctuation
-      return text.replace(/\?/g, ' ?').replace(/\!/g, ' !').replace(/\./g, ' .').replace(/,/g, ' ,').replace(/:/g, ' :').replace(/;/g, ' ;');
-    }
+    const isTokPisin = detectLanguage(text) === 'tokpisin';
+    return isTokPisin ? addTokPisinPunctuation(processTokPisinText(text)) : addTokPisinPunctuation(text);
   };
 
   const autoProcessText = () => {
@@ -1707,46 +1568,71 @@ function About() {
             <div className="about-left">
               <div className="about-header">
                 <h2>◆ What is LiklikDrama?</h2>
-                <p className="section-intro">A grassroots short-form drama movement from Papua New Guinea</p>
+                <p className="section-intro">Understanding the concept and cultural significance</p>
               </div>
               <div className="definition-card">
-                <h3>◈ Definition</h3>
-                <p>LiklikDrama refers to short, original dramatic vignettes produced and shared by Papua New Guinean creators that foreground real stories, island vibes, and local humour. These bite-sized videos are primarily visible on social platforms like TikTok.</p>
+                <h3>◈ The LiklikDrama Concept</h3>
+                <p>LiklikDrama represents the small-scale, community-driven storytelling and content creation that thrives on platforms like TikTok. It's where everyday Papua New Guineans share their stories, culture, and creativity in bite-sized, engaging formats.</p>
               </div>
             </div>
             <div className="about-right">
-              <div className="definition-card">
-                <h3>◉ Form & Style</h3>
-                <p>Episodes are typically short, character-driven, and rooted in everyday life — domestic scenes, market banter, pranks, and local rituals condensed into memorable moments that capture authentic PNG culture.</p>
+              <div className="origin-story">
+                <h4>◆ Origin Story</h4>
+                <p>The term emerged organically from TikTok content creators who labeled their videos "Liklik Drama" - meaning "small drama" or "little stories" in Tok Pisin. This grassroots movement has grown into a cultural phenomenon.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Origins Section */}
+        {/* Cultural Impact Section */}
         <section className="about-section">
-          <div className="origins-content">
-            <div className="about-left">
-              <div className="about-header">
-                <h2>◆ Our Origins & Evolution</h2>
-                <p className="section-intro">How LiklikDrama emerged organically from PNG's rich cultural landscape</p>
+          <div className="impact-content">
+            <div className="impact-header">
+              <h2>◉ Cultural Impact</h2>
+              <p className="section-intro">How LiklikDrama is transforming PNG's digital landscape</p>
+            </div>
+            <div className="impact-grid">
+              <div className="impact-item">
+                <div className="impact-icon">◆</div>
+                <h4>Digital Storytelling</h4>
+                <p>Revolutionizing how PNG stories are told and shared in the digital age</p>
               </div>
-              <div className="origin-item">
-                <div className="origin-icon">◈</div>
-                <div className="origin-text">
-                  <h4>Platform Catalysis</h4>
-                  <p>The rise of short-video platforms created low-barrier tools for storytelling. PNG creators adopted these tools to record and share local scenes, accelerating visibility and community engagement.</p>
-                </div>
+              <div className="impact-item">
+                <div className="impact-icon">◈</div>
+                <h4>Cultural Preservation</h4>
+                <p>Documenting and preserving traditional stories through modern technology</p>
               </div>
-              <div className="origin-item">
-                <div className="origin-icon">◉</div>
-                <div className="origin-text">
-                  <h4>Cultural Continuity</h4>
-                  <p>LiklikDrama draws on longstanding oral and performative traditions — storytelling, improvised theatre, and communal humour — repackaged for digital audiences.</p>
-                </div>
+              <div className="impact-item">
+                <div className="impact-icon">◉</div>
+                <h4>Youth Empowerment</h4>
+                <p>Giving young Papua New Guineans a platform to express their creativity</p>
               </div>
             </div>
-            <div className="about-right">
+          </div>
+        </section>
+
+        {/* Origin and Evolution */}
+        <section className="about-section">
+          <div className="origin-content">
+            <div className="origin-header">
+              <h2>◆ Origin & Evolution</h2>
+              <p className="section-intro">From casual sharing to cultural movement</p>
+            </div>
+            <div className="origin-timeline">
+              <div className="origin-item">
+                <div className="origin-icon">★</div>
+                <div className="origin-text">
+                  <h4>Early Days</h4>
+                  <p>Started as individual creators sharing personal stories and cultural content on TikTok</p>
+                </div>
+              </div>
+              <div className="origin-item">
+                <div className="origin-icon">★</div>
+                <div className="origin-text">
+                  <h4>Community Building</h4>
+                  <p>Creators began collaborating and supporting each other's content</p>
+                </div>
+              </div>
               <div className="origin-item">
                 <div className="origin-icon">★</div>
                 <div className="origin-text">
@@ -1794,7 +1680,6 @@ function About() {
   );
 }
 
-// Footer Component - Reverted to Previous State
 function Footer() {
   return (
     <footer className="footer">
