@@ -422,9 +422,29 @@ function Production() {
       <section className="production-hero">
         <div className="production-hero-content">
           <div className="production-hero-text">
-            <div className="production-hero-cta">
-              <button className="cta-button">View Our Portfolio</button>
-              <button className="cta-button secondary">Start Your Project</button>
+            <div className="production-hero-cta" style={{ textAlign: 'center' }}>
+              <button 
+                className="cta-button" 
+                onClick={() => {
+                  const portfolioSection = document.querySelector('.portfolio-showcase');
+                  if (portfolioSection) {
+                    portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                View Our Portfolio
+              </button>
+              <button 
+                className="cta-button secondary" 
+                onClick={() => {
+                  const videoSection = document.querySelector('.video-submission');
+                  if (videoSection) {
+                    videoSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                Start Your Project
+              </button>
             </div>
           </div>
         </div>
