@@ -1188,6 +1188,28 @@ function Interaction() {
         </div>
       </section>
 
+      {/* Community CTA Section */}
+      <section className="interaction-cta">
+        <div className="interaction-cta-content">
+          <h2>◆ Join Our Storytelling Community</h2>
+          <p>Be part of a growing movement to preserve and celebrate PNG's rich storytelling tradition</p>
+          <div className="cta-buttons">
+            <button className="cta-button large">Start Sharing</button>
+            <button 
+              className="cta-button secondary large" 
+              onClick={() => {
+                const storySection = document.querySelector('.story-submission');
+                if (storySection) {
+                  storySection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              Learn More
+            </button>
+          </div>
+        </div>
+      </section>
+
       <div className="page-content">
         <Carousel />
         
@@ -1414,17 +1436,6 @@ function Interaction() {
           </div>
         </section>
 
-        {/* Interaction CTA */}
-        <section className="interaction-cta">
-          <div className="interaction-cta-content">
-            <h2>◆ Join Our Storytelling Community</h2>
-            <p>Be part of a growing movement to preserve and celebrate PNG's rich storytelling tradition</p>
-            <div className="cta-buttons">
-              <button className="cta-button large">Start Sharing</button>
-              <button className="cta-button secondary large">Learn More</button>
-            </div>
-          </div>
-        </section>
       </div>
 
       {/* Story Criteria Popup - Simplified */}
