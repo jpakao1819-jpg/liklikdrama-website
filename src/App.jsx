@@ -422,8 +422,6 @@ function Production() {
       <section className="production-hero">
         <div className="production-hero-content">
           <div className="production-hero-text">
-            <h1>◆ Production Services</h1>
-            <p className="production-hero-subtitle">Transform your vision into compelling visual stories that resonate with audiences worldwide</p>
             <div className="production-hero-cta">
               <button className="cta-button">View Our Portfolio</button>
               <button className="cta-button secondary">Start Your Project</button>
@@ -475,20 +473,28 @@ function Production() {
         <div className="services-showcase">
           <h2>◆ Our Production Services</h2>
           <div className="service-item">
-            <h3>◆ Film Production</h3>
-            <p>Short films, documentaries, commercials, and music videos</p>
+            <h3>◆ Video Production</h3>
+            <p>Corporate videos, event coverage, promotional content, interviews, training videos, documentaries</p>
           </div>
           <div className="service-item">
-            <h3>◉ Photography</h3>
-            <p>Professional photography for events, portraits, and commercial projects</p>
+            <h3>◆ Photography</h3>
+            <p>Event photography, corporate headshots, product photography, lifestyle photography, aerial photography</p>
           </div>
           <div className="service-item">
-            <h3>◈ Post-Production</h3>
-            <p>Video editing, color grading, sound design, and visual effects</p>
+            <h3>◆ Graphic Design</h3>
+            <p>Logo design, branding packages, marketing materials, social media graphics, print design, web graphics</p>
           </div>
           <div className="service-item">
-            <h3>★ Training</h3>
-            <p>Acting workshops, technical training, and mentorship programs</p>
+            <h3>◆ Social Media Management</h3>
+            <p>Content creation, social media strategy, community management, analytics and reporting, paid advertising</p>
+          </div>
+          <div className="service-item">
+            <h3>◆ Live Streaming</h3>
+            <p>Event live streaming, multi-camera setup, professional audio, virtual event production, webinar hosting</p>
+          </div>
+          <div className="service-item">
+            <h3>◆ Audio Production</h3>
+            <p>Voice recording, music production, podcast production, audio editing, sound design, mixing and mastering</p>
           </div>
         </div>
 
