@@ -1260,17 +1260,39 @@ function Interaction() {
                     />
                     <div className="speech-controls">
                       <div className="language-selector">
-                        <label htmlFor="language-select">Language:</label>
-                        <select
-                          id="language-select"
-                          value={selectedLanguage}
-                          onChange={(e) => setSelectedLanguage(e.target.value)}
-                          className="language-dropdown"
-                        >
-                          <option value="en-US">English</option>
-                          <option value="en-PG">Tok Pisin (PNG)</option>
-                          <option value="auto">Auto-Detect</option>
-                        </select>
+                        <label>Language:</label>
+                        <div className="language-options">
+                          <label className="language-option">
+                            <input
+                              type="radio"
+                              name="language"
+                              value="en-US"
+                              checked={selectedLanguage === 'en-US'}
+                              onChange={(e) => setSelectedLanguage(e.target.value)}
+                            />
+                            <span className="language-label">English</span>
+                          </label>
+                          <label className="language-option">
+                            <input
+                              type="radio"
+                              name="language"
+                              value="en-PG"
+                              checked={selectedLanguage === 'en-PG'}
+                              onChange={(e) => setSelectedLanguage(e.target.value)}
+                            />
+                            <span className="language-label">Tok Pisin (PNG)</span>
+                          </label>
+                          <label className="language-option">
+                            <input
+                              type="radio"
+                              name="language"
+                              value="auto"
+                              checked={selectedLanguage === 'auto'}
+                              onChange={(e) => setSelectedLanguage(e.target.value)}
+                            />
+                            <span className="language-label">Auto-Detect</span>
+                          </label>
+                        </div>
                       </div>
                       <button
                         type="button"
