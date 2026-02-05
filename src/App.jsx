@@ -1188,28 +1188,6 @@ function Interaction() {
         </div>
       </section>
 
-      {/* Community CTA Section */}
-      <section className="interaction-cta">
-        <div className="interaction-cta-content">
-          <h2>◆ Join Our Storytelling Community</h2>
-          <p>Be part of a growing movement to preserve and celebrate PNG's rich storytelling tradition</p>
-          <div className="cta-buttons">
-            <button className="cta-button large">Start Sharing</button>
-            <button 
-              className="cta-button secondary large" 
-              onClick={() => {
-                const storySection = document.querySelector('.story-submission');
-                if (storySection) {
-                  storySection.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-            >
-              Learn More
-            </button>
-          </div>
-        </div>
-      </section>
-
       <div className="page-content">
         <Carousel />
         
@@ -1572,6 +1550,91 @@ function Interaction() {
                 }}>◆</span> Stories should be between 300-1000 words for optimal reading
               </li>
             </ul>
+            
+            <h3 style={{
+              color: '#d4a574',
+              fontSize: '20px',
+              marginBottom: '15px',
+              textAlign: 'center',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              marginTop: '25px'
+            }}>◆ Community Guidelines</h3>
+            <p style={{
+              color: '#ffffff',
+              fontSize: '16px',
+              marginBottom: '20px',
+              textAlign: 'center',
+              lineHeight: '1.5'
+            }}>Help us maintain a respectful and inclusive storytelling environment</p>
+            
+            <div style={{
+              marginBottom: '25px'
+            }}>
+              <div style={{
+                color: '#ffffff',
+                fontSize: '16px',
+                marginBottom: '15px',
+                paddingLeft: '25px',
+                position: 'relative',
+                lineHeight: '1.5'
+              }}>
+                <span style={{
+                  position: 'absolute',
+                  left: '0',
+                  color: '#ff8c42',
+                  fontSize: '14px'
+                }}>◈</span> Respect Cultural Traditions
+                <p style={{
+                  margin: '5px 0 0 0',
+                  fontSize: '14px',
+                  color: '#cccccc'
+                }}>Honor the cultural significance of stories and share them with authenticity and respect for their origins.</p>
+              </div>
+              
+              <div style={{
+                color: '#ffffff',
+                fontSize: '16px',
+                marginBottom: '15px',
+                paddingLeft: '25px',
+                position: 'relative',
+                lineHeight: '1.5'
+              }}>
+                <span style={{
+                  position: 'absolute',
+                  left: '0',
+                  color: '#ff8c42',
+                  fontSize: '14px'
+                }}>◉</span> Be Authentic
+                <p style={{
+                  margin: '5px 0 0 0',
+                  fontSize: '14px',
+                  color: '#cccccc'
+                }}>Share stories from your personal experience or community knowledge. Avoid appropriating stories from other cultures.</p>
+              </div>
+              
+              <div style={{
+                color: '#ffffff',
+                fontSize: '16px',
+                marginBottom: '15px',
+                paddingLeft: '25px',
+                position: 'relative',
+                lineHeight: '1.5'
+              }}>
+                <span style={{
+                  position: 'absolute',
+                  left: '0',
+                  color: '#ff8c42',
+                  fontSize: '14px'
+                }}>★</span> Community First
+                <p style={{
+                  margin: '5px 0 0 0',
+                  fontSize: '14px',
+                  color: '#cccccc'
+                }}>Consider how your stories contribute to community understanding and cultural preservation.</p>
+              </div>
+            </div>
+            
             <button 
               onClick={() => {
                 console.log('Close button clicked');
