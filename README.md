@@ -154,7 +154,7 @@ VITE_CONTACT_PHONE=+675 7002 1249
 - **Email:** info@culturesphere.com.au
 - **Phone:** +675 7002 1249
 - **GitHub:** https://github.com/jpakao1819-jpg/liklikdrama-website
-- **Social:** @liklikdrama (TikTok, Instagram, Facebook)
+- **Social:** @liklikdrama (TikTok, Facebook)
 
 ## 🏆 Contributing
 

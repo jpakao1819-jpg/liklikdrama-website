@@ -1712,7 +1712,6 @@ function Footer() {
           <ul>
             <li><strong>TikTok:</strong> <a href="https://www.tiktok.com/@liklik.drama" target="_blank">@liklik.drama</a></li>
             <li><strong>Facebook:</strong> <a href="https://www.facebook.com/liklikmedia" target="_blank">liklikmedia</a></li>
-            <li><strong>Instagram:</strong> <a href="https://www.instagram.com/liklikdrama" target="_blank">@liklikdrama</a></li>
           </ul>
         </div>
       </div>
