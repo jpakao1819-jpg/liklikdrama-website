@@ -1,14 +1,14 @@
-/* Base Styles */
+/* Valentine's Day Theme - Base Styles */
 body {
   margin: 0;
+  padding: 20px;
   min-width: 320px;
   min-height: 100vh;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
   font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #4A0E0E;
+  background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 25%, #FF69B4 50%, #DC143C 75%, #8B0000 100%);
 }
 
 .app {
