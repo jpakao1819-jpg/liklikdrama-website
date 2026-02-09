@@ -1,4 +1,4 @@
-/* Valentine's Day Theme - Base Styles - Vercel Deploy */
+/* Valentine's Day Theme - Combined Styles */
 * {
   box-sizing: border-box;
 }
@@ -18,9 +18,19 @@
 body {
   margin: 0;
   padding: 20px;
+  min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 25%, #FF69B4 50%, #DC143C 75%, #8B0000 100%);
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+  font-weight: 400;
   color: #4A0E0E;
+  background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 25%, #FF69B4 50%, #DC143C 75%, #8B0000 100%);
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* Floating Hearts Background */
@@ -62,6 +72,7 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
+  width: 100%;
 }
 
 .page-title {
@@ -114,72 +125,32 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Centered Sections */
+section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  width: 100%;
 }
 
-/* Language Options Styling */
-.language-options {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
-  flex-wrap: wrap;
+/* Header Styles with Logo Image - Valentine's Theme */
+.main-header {
+  background: linear-gradient(135deg, rgba(220, 20, 60, 0.8), rgba(255, 105, 180, 0.8));
+  backdrop-filter: blur(15px);
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  box-shadow: 0 2px 20px rgba(220, 20, 60, 0.3);
 }
 
-.language-option {
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border: 2px solid #d4a574;
-  border-radius: 25px;
-  background: rgba(212, 165, 116, 0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.language-option:hover {
-  background: rgba(212, 165, 116, 0.2);
-  border-color: #ff8c42;
-  transform: translateY(-2px);
-}
-
-.language-option input[type="radio"] {
-  margin: 0;
-  accent-color: #d4a574;
-}
-
-.language-option input[type="radio"]:checked + .language-label {
-  color: #ff8c42;
-  font-weight: bold;
-}
-
-.language-option input[type="radio"]:checked {
-  accent-color: #ff8c42;
-}
-
-.language-label {
-  font-size: 14px;
-  color: #ffffff;
-  user-select: none;
-}
-
-.language-selector {
-  margin-bottom: 20px;
-}
-
-.language-selector label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #d4a574;
+  justify-content: center;
+  width: 100%;
 }
