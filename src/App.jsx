@@ -1161,48 +1161,6 @@ function About() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="footer">
-      <div className="footer-content">
-        <div className="footer-section">
-          <h3>◆ Quick Links</h3>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/production">Production</a></li>
-            <li><a href="/about">About Us</a></li>
-          </ul>
-        </div>
-        
-        <div className="footer-section">
-          <h3>◈ Contact</h3>
-          <ul>
-            <li><strong>Email:</strong> <a href="mailto:info@culturesphere.com.au">info@culturesphere.com.au</a></li>
-            <li><strong>Phone:</strong> +675 7002 1249</li>
-          </ul>
-        </div>
-        
-        <div className="footer-section">
-          <h3>◉ Culture Sphere</h3>
-          <p><a href="https://www.culturesphere.com.au" target="_blank">Visit us for more</a></p>
-        </div>
-        
-        <div className="footer-section">
-          <h3>★ Follow Us</h3>
-          <ul>
-            <li><strong>TikTok:</strong> <a href="https://www.tiktok.com/@liklik.drama" target="_blank">@liklik.drama</a></li>
-            <li><strong>Facebook:</strong> <a href="https://www.facebook.com/liklikmedia" target="_blank">liklikmedia</a></li>
-          </ul>
-        </div>
-      </div>
-      
-      <div className="footer-bottom">
-        <p>&copy; 2024 LiklikDrama Culture Sphere. All rights reserved. Made with ❤️ in Papua New Guinea</p>
-      </div>
-    </footer>
-  );
-}
-
 export default function App() {
   return (
     <Router>
