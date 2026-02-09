@@ -1,31 +1,57 @@
+/* Valentine's Day Theme - Base Styles */
+* {
+  box-sizing: border-box;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #000000;
-
+  color: #4A0E0E;
+  background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 25%, #FF69B4 50%, #DC143C 75%, #8B0000 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #d4a574;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #e6b685;
-}
-
 body {
   margin: 0;
-  min-width: 320px;
+  padding: 20px;
   min-height: 100vh;
+  background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 25%, #FF69B4 50%, #DC143C 75%, #8B0000 100%);
+  color: #4A0E0E;
+}
+
+/* Floating Hearts Background */
+body::before {
+  content: '❤️ 💕 💖 💗 💓 💝 💘 💞';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: -1;
+  animation: floatHearts 20s linear infinite;
+}
+
+@keyframes floatHearts {
+  0% { transform: translateY(100vh) rotate(0deg); }
+  100% { transform: translateY(-100vh) rotate(360deg); }
+}
+
+a {
+  font-weight: bold;
+  color: #DC143C;
+  text-decoration: inherit;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #FF69B4;
 }
 
 .app {
@@ -41,14 +67,17 @@ body {
 .page-title {
   font-size: 48px;
   font-weight: bold;
-  color: #d4a574;
+  background: linear-gradient(135deg, #DC143C, #FF69B4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
   text-align: center;
 }
 
 .page-description {
   font-size: 18px;
-  color: #ffffff;
+  color: #8B0000;
   text-align: center;
   margin-bottom: 40px;
   max-width: 800px;
@@ -69,12 +98,16 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background: linear-gradient(135deg, #DC143C, #FF69B4);
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
 }
 button:hover {
-  border-color: #d4a574;
+  background: linear-gradient(135deg, #FF69B4, #DC143C);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 20, 60, 0.4);
 }
 button:focus,
 button:focus-visible {
