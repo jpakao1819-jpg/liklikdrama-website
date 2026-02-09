@@ -1,4 +1,4 @@
-/* Valentine's Day Theme - Combined Styles */
+/* Valentine's Day Theme - Complete Unified Styles */
 * {
   box-sizing: border-box;
 }
@@ -17,7 +17,7 @@
 
 body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
   font-family: 'Georgia', serif;
@@ -133,7 +133,7 @@ section {
   width: 100%;
 }
 
-/* Header Styles with Logo Image - Valentine's Theme */
+/* Header Styles - Valentine's Theme */
 .main-header {
   background: linear-gradient(135deg, rgba(220, 20, 60, 0.8), rgba(255, 105, 180, 0.8));
   backdrop-filter: blur(15px);
@@ -153,4 +153,227 @@ section {
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.logo-image {
+  max-height: 60px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
+/* Navigation Styles - Valentine's Theme */
+.main-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(220, 20, 60, 0.7), rgba(255, 105, 180, 0.8));
+  backdrop-filter: blur(15px);
+  z-index: 998;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 20px rgba(220, 20, 60, 0.3);
+}
+
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 100%;
+  position: relative;
+}
+
+.nav-logo {
+  position: absolute;
+  left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo-image {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.nav-logo-image:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  color: #FFE4E1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  color: #FFE4E1;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Hero Section - Valentine's Theme */
+.hero-section {
+  padding: 120px 20px;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(220, 20, 60, 0.2));
+  text-align: center;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 4em;
+  font-weight: bold;
+  background: linear-gradient(135deg, #DC143C, #FF69B4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(220, 20, 60, 0.3);
+}
+
+.hero-text p {
+  font-size: 1.4em;
+  color: #8B0000;
+  margin-bottom: 30px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, #DC143C, #FF69B4);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px;
+}
+
+.cta-button:hover {
+  background: linear-gradient(135deg, #FF69B4, #DC143C);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(220, 20, 60, 0.5);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  border: 2px solid #DC143C;
+  color: #DC143C;
+}
+
+.cta-button.secondary:hover {
+  background: #DC143C;
+  color: white;
+}
+
+/* Footer - Valentine's Theme */
+.footer {
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.9), rgba(220, 20, 60, 0.8));
+  color: #FFE4E1;
+  padding: 40px 20px 20px;
+  margin-top: 60px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.footer-section h3 {
+  color: #FFB6C1;
+  margin-bottom: 15px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section a {
+  color: #FFE4E1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #FFB6C1;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 182, 193, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-text h1 {
+    font-size: 2.5em;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
 }
