@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Main initialization function
 function initWebsite() {
     initOpeningAnimation();
-    initVideoBackground();
     initHeaderScroll();
     initScrollEffects();
     initHoverEffects();
@@ -57,18 +56,6 @@ function initOpeningAnimation() {
                 openingAnimation.style.display = 'none';
             }, 1000);
         }, 4000);
-    }
-}
-
-// Video Background Controls (Home section only)
-function initVideoBackground() {
-    const video = document.querySelector('.background-video');
-    if (video) {
-        video.muted = true;
-        video.loop = true;
-        video.play().catch(error => {
-            console.log('Video autoplay prevented:', error);
-        });
     }
 }
 
