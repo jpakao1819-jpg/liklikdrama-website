@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Main initialization function
 function initWebsite() {
     initOpeningAnimation();
-    initVideoBackground();
     initHeaderScroll();
     initScrollEffects();
     initHoverEffects();
@@ -22,6 +21,7 @@ function initWebsite() {
     initIntersectionObserver();
     initClickEffects();
     initTouchSupport();
+    initMobileOptimizations();
     initNavigation();
     initProductionFeatures();
     initInteractionFeatures();
@@ -539,6 +539,253 @@ window.addEventListener('load', function() {
     const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
     console.log(`Page load time: ${loadTime}ms`);
 });
+
+// Mobile optimizations
+function initMobileOptimizations() {
+    // Detect mobile device
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+    const isTablet = window.innerWidth <= 992 && window.innerWidth > 768;
+    
+    if (isMobile) {
+        document.body.classList.add('mobile-device');
+        
+        // Optimize animations for mobile
+        optimizeAnimationsForMobile();
+        
+        // Add swipe gestures for navigation
+        initSwipeGestures();
+        
+        // Optimize video for mobile
+        optimizeVideoForMobile();
+        
+        // Add mobile-specific interactions
+        initMobileInteractions();
+    }
+    
+    if (isTablet) {
+        document.body.classList.add('tablet-device');
+        optimizeForTablet();
+    }
+    
+    // Add viewport meta tag handling
+    handleViewportOptimization();
+    
+    // Optimize images for mobile
+    optimizeImagesForMobile();
+    
+    // Add mobile performance monitoring
+    initMobilePerformanceMonitoring();
+}
+
+// Optimize animations for mobile
+function optimizeAnimationsForMobile() {
+    // Reduce animation complexity on mobile
+    const style = document.createElement('style');
+    style.textContent = `
+        @media (max-width: 768px) {
+            .opening-3d-logo {
+                animation-duration: 2s !important;
+            }
+            
+            .content-bubble {
+                transition: transform 0.2s ease !important;
+            }
+            
+            .particle {
+                animation-duration: 1s !important;
+            }
+            
+            .drama-logo-3d {
+                animation-duration: 8s !important;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Initialize swipe gestures
+function initSwipeGestures() {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    document.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    
+    document.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipeGesture();
+    }, false);
+    
+    function handleSwipeGesture() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next section
+                navigateToNextSection();
+            } else {
+                // Swipe right - previous section
+                navigateToPreviousSection();
+            }
+        }
+    }
+}
+
+// Optimize video for mobile
+function optimizeVideoForMobile() {
+    const video = document.querySelector('.background-video');
+    if (video) {
+        // Reduce video quality on mobile to save bandwidth
+        video.setAttribute('playsinline', '');
+        video.setAttribute('muted', '');
+        
+        // Handle mobile video playback
+        video.addEventListener('error', function() {
+            // Fallback for mobile if video fails
+            console.log('Video fallback activated for mobile');
+            const videoContainer = document.querySelector('.video-background');
+            if (videoContainer) {
+                videoContainer.style.background = 'linear-gradient(135deg, #000000, #050505, #0a0a0a)';
+            }
+        });
+    }
+}
+
+// Initialize mobile-specific interactions
+function initMobileInteractions() {
+    // Add tap feedback for better mobile UX
+    const interactiveElements = document.querySelectorAll('.nav-link, .social-link, .content-bubble, .feature-link');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('touchstart', function(e) {
+            this.classList.add('touch-active');
+        }, { passive: true });
+        
+        element.addEventListener('touchend', function(e) {
+            setTimeout(() => {
+                this.classList.remove('touch-active');
+            }, 150);
+        }, { passive: true });
+    });
+    
+    // Add mobile tap styles
+    const mobileStyles = document.createElement('style');
+    mobileStyles.textContent = `
+        .touch-active {
+            opacity: 0.7 !important;
+            transform: scale(0.95) !important;
+            transition: all 0.1s ease !important;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-link, .social-link {
+                min-height: 44px;
+                min-width: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    `;
+    document.head.appendChild(mobileStyles);
+}
+
+// Handle viewport optimization
+function handleViewportOptimization() {
+    // Set proper viewport height for mobile browsers
+    function setViewportHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setViewportHeight();
+    window.addEventListener('resize', setViewportHeight);
+    window.addEventListener('orientationchange', setViewportHeight);
+}
+
+// Optimize images for mobile
+function optimizeImagesForMobile() {
+    const images = document.querySelectorAll('img');
+    
+    images.forEach(img => {
+        // Add loading optimization
+        img.loading = 'lazy';
+        
+        // Add error handling
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            console.log('Image failed to load:', this.src);
+        });
+    });
+}
+
+// Initialize mobile performance monitoring
+function initMobilePerformanceMonitoring() {
+    // Monitor performance on mobile devices
+    if ('performance' in window && 'getEntriesByType' in performance) {
+        setTimeout(() => {
+            const entries = performance.getEntriesByType('navigation');
+            if (entries.length > 0) {
+                const loadTime = entries[0].loadEventEnd - entries[0].loadEventStart;
+                console.log('Page load time:', loadTime + 'ms');
+                
+                // Optimize if load time is slow on mobile
+                if (loadTime > 3000 && window.innerWidth <= 768) {
+                    enablePerformanceMode();
+                }
+            }
+        }, 0);
+    }
+}
+
+// Enable performance mode for slow mobile connections
+function enablePerformanceMode() {
+    document.body.classList.add('performance-mode');
+    
+    const performanceStyle = document.createElement('style');
+    performanceStyle.textContent = `
+        .performance-mode * {
+            animation-duration: 0.1s !important;
+            transition-duration: 0.1s !important;
+        }
+        
+        .performance-mode .particle {
+            display: none !important;
+        }
+        
+        .performance-mode .drama-logo-3d {
+            animation: none !important;
+            opacity: 0.01 !important;
+        }
+    `;
+    document.head.appendChild(performanceStyle);
+}
+
+// Optimize for tablet
+function optimizeForTablet() {
+    // Tablet-specific optimizations
+    const tabletStyle = document.createElement('style');
+    tabletStyle.textContent = `
+        @media (min-width: 769px) and (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .nav-link {
+                font-size: 0.8rem;
+                padding: 0.8rem 0.2rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.8rem;
+            }
+        }
+    `;
+    document.head.appendChild(tabletStyle);
+}
 
 // Error handling
 window.addEventListener('error', function(e) {
