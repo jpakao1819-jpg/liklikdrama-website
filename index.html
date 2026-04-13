@@ -3,11 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Liklik Drama</title>
 </head>
 <body>
-    <h1>Welcome to Liklik Drama</h1>
-    <p>Enjoy a collection of short dramas tailored for everyone!</p>
-    <script src="app.js"></script>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#production">Production</a></li>
+                <li><a href="#interaction">Interaction</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="about">
+        <h1>About Us</h1>
+        <p>Welcome to Liklik Drama, where we bring stories to life!</p>
+    </section>
+    <section id="production">
+        <h2>Production</h2>
+        <p>Our production team is dedicated to creating stunning visuals.</p>
+        <div class="video-background">
+            <video autoplay muted loop>
+                <source src="background.mp4" type="video/mp4">
+            </video>
+        </div>
+    </section>
+    <section id="interaction">
+        <h2>User Interaction</h2>
+        <p>Engage with our interactive content!</p>
+    </section>
+    <footer>
+        <p>&copy; 2026 Liklik Drama. All rights reserved.</p>
+    </footer>
+    <script src="scripts.js"></script>
 </body>
 </html>
