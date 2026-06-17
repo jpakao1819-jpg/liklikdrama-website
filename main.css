@@ -596,17 +596,50 @@ section {
 
 /* Video Container */
 .video-container {
-  width: 100%;
+  width: 30%;
   height: auto;
-  margin-bottom: 1.5rem;
+  margin: 0 auto;
   overflow: hidden;
   border-radius: 8px;
+  border: 2px solid rgba(255, 215, 0, 0.4);
 }
 
 .video-container video {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Video Wrapper */
+.video-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Video Caption */
+.video-caption {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--primary-yellow);
+  font-weight: 700;
+  margin-top: -1px;
+  padding: 0.5rem 1rem;
+  background: var(--deep-black);
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  text-align: center;
+  width: 30%;
+}
+
+/* Episode Description */
+#episode-description {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--off-white);
+  font-size: 1rem;
 }
 
 /* Episode Grid */
@@ -1073,6 +1106,11 @@ section {
   .episode-buttons {
     grid-template-columns: repeat(3, 1fr);
   }
+  
+  .video-container,
+  .video-caption {
+    width: 50%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1118,5 +1156,10 @@ section {
   
   .episode-buttons {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .video-container,
+  .video-caption {
+    width: 50%;
   }
 }

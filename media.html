@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media - LiklikDrama</title>
+    <meta name="description" content="Explore LiklikDrama's media showcase: monthly contents, movie projects, promotional videos, and gallery.">
+    <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">LIKLIKDRAMA</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <!-- Surprising Navigation - Vertical Right Side -->
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="media.html" class="nav-link active">Media</a>
+        <a href="updates.html" class="nav-link">Updates</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <h1 class="hero-title fade-in stagger-1">Media Showcase</h1>
+                <p class="hero-subtitle fade-in stagger-2">Explore our creative content and community stories</p>
+            </div>
+        </section>
+
+        <!-- Monthly Contents -->
+        <section class="monthly-contents">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Monthly Contents</h2>
+                <p class="section-subtitle">Fresh content every month to keep you engaged</p>
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="card fade-in stagger-1">
+                    <div class="content-placeholder">◆</div>
+                    <h3>January 2024</h3>
+                    <p>New Year celebrations and local business spotlights</p>
+                    <a href="#" class="btn btn-secondary">View Content</a>
+                </div>
+                
+                <div class="card fade-in stagger-2">
+                    <div class="content-placeholder">◆</div>
+                    <h3>February 2024</h3>
+                    <p>Love stories and Valentine's Day special features</p>
+                    <a href="#" class="btn btn-secondary">View Content</a>
+                </div>
+                
+                <div class="card fade-in stagger-3">
+                    <div class="content-placeholder">◆</div>
+                    <h3>March 2024</h3>
+                    <p>Women's Day features and inspiring stories</p>
+                    <a href="#" class="btn btn-secondary">View Content</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Movie Projects -->
+        <section class="movie-projects">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Love & Coconut</h2>
+                <p class="section-subtitle">Our latest movie production - 12 episodes of heartfelt storytelling</p>
+            </div>
+            
+            <div class="card fade-in">
+                <div class="video-wrapper">
+                    <div class="video-container">
+                        <video id="main-video" controls playsinline>
+                            <source src="Love & Coconut Trailer/Coconut Drama Trailer.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="video-caption" id="episode-title">Trailer</div>
+                </div>
+                <p id="episode-description">Watch the official trailer for Love & Coconut</p>
+            </div>
+            
+            <div class="episode-selector fade-in" style="margin-top: 2rem;">
+                <h3>Select Episode</h3>
+                <div class="episode-buttons">
+                    <button class="episode-btn active" data-episode="trailer" data-title="Trailer" data-description="Watch the official trailer for Love & Coconut" data-video="Love & Coconut Trailer/Coconut Drama Trailer.mp4">Trailer</button>
+                    <button class="episode-btn" data-episode="1" data-title="Episode 1" data-description="The Beginning" data-video="">Episode 1</button>
+                    <button class="episode-btn" data-episode="2" data-title="Episode 2" data-description="Coming Soon" data-video="">Episode 2</button>
+                    <button class="episode-btn" data-episode="3" data-title="Episode 3" data-description="Coming Soon" data-video="">Episode 3</button>
+                    <button class="episode-btn" data-episode="4" data-title="Episode 4" data-description="Coming Soon" data-video="">Episode 4</button>
+                    <button class="episode-btn" data-episode="5" data-title="Episode 5" data-description="Coming Soon" data-video="">Episode 5</button>
+                    <button class="episode-btn" data-episode="6" data-title="Episode 6" data-description="Coming Soon" data-video="">Episode 6</button>
+                    <button class="episode-btn" data-episode="7" data-title="Episode 7" data-description="Coming Soon" data-video="">Episode 7</button>
+                    <button class="episode-btn" data-episode="8" data-title="Episode 8" data-description="Coming Soon" data-video="">Episode 8</button>
+                    <button class="episode-btn" data-episode="9" data-title="Episode 9" data-description="Coming Soon" data-video="">Episode 9</button>
+                    <button class="episode-btn" data-episode="10" data-title="Episode 10" data-description="Coming Soon" data-video="">Episode 10</button>
+                    <button class="episode-btn" data-episode="11" data-title="Episode 11" data-description="Coming Soon" data-video="">Episode 11</button>
+                    <button class="episode-btn" data-episode="12" data-title="Episode 12" data-description="Coming Soon" data-video="">Episode 12</button>
+                </div>
+            </div>
+            
+            <div class="card fade-in" style="margin-top: 2rem; text-align: center;">
+                <h3>Watch on Social Media</h3>
+                <p>Follow us on Facebook, TikTok, and YouTube for the latest episodes</p>
+                <div class="grid grid-3" style="margin-top: 1.5rem;">
+                    <a href="https://www.facebook.com/liklikmediaand" target="_blank" class="btn btn-primary">Watch on Facebook</a>
+                    <a href="https://vm.tiktok.com/ZS9jfkU7DwJtF-w0vWd/" target="_blank" class="btn btn-primary">Watch on TikTok</a>
+                    <a href="https://www.youtube.com/@LikLikMedia" target="_blank" class="btn btn-primary">Watch on YouTube</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promotional Videos -->
+        <section class="promotional-videos">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Promotional Videos</h2>
+                <p class="section-subtitle">Our latest promotional content for local businesses</p>
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="card fade-in stagger-1">
+                    <div class="video-container">
+                        <video autoplay muted loop playsinline>
+                            <source src="promo vid.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h3>Featured Promotion</h3>
+                    <p>Watch our latest promotional video showcasing local businesses</p>
+                    <a href="https://www.tiktok.com/@liklik.drama" target="_blank" class="btn btn-primary">Watch on TikTok</a>
+                </div>
+                
+                <div class="card fade-in stagger-2">
+                    <div class="video-placeholder">◆</div>
+                    <h3>More Promotions</h3>
+                    <p>Explore our full library of promotional videos on social media</p>
+                    <a href="https://www.facebook.com/liklikmedia" target="_blank" class="btn btn-primary">View on Facebook</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="gallery">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Gallery</h2>
+                <p class="section-subtitle">Visual moments from our journey</p>
+            </div>
+            
+            <div class="grid grid-4">
+                <div class="card fade-in stagger-1">
+                    <div class="gallery-placeholder">◆</div>
+                    <h3>Behind the Scenes</h3>
+                </div>
+                
+                <div class="card fade-in stagger-2">
+                    <div class="gallery-placeholder">◆</div>
+                    <h3>Community Events</h3>
+                </div>
+                
+                <div class="card fade-in stagger-3">
+                    <div class="gallery-placeholder">◆</div>
+                    <h3>Business Spotlights</h3>
+                </div>
+                
+                <div class="card fade-in stagger-4">
+                    <div class="gallery-placeholder">◆</div>
+                    <h3>Storytelling Sessions</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Media Integration -->
+        <section class="social-media">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Follow Us</h2>
+                <p class="section-subtitle">Stay connected on social media</p>
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="card fade-in stagger-1">
+                    <h3>Facebook</h3>
+                    <p>Join our community on Facebook for daily updates, behind-the-scenes content, and community stories.</p>
+                    <a href="https://www.facebook.com/liklikmediaand" target="_blank" class="btn btn-primary">Follow on Facebook</a>
+                </div>
+                
+                <div class="card fade-in stagger-2">
+                    <h3>TikTok</h3>
+                    <p>Watch our short-form videos, promotional content, and creative storytelling on TikTok.</p>
+                    <a href="https://vm.tiktok.com/ZS9jfkU7DwJtF-w0vWd/" target="_blank" class="btn btn-primary">Follow on TikTok</a>
+                </div>
+                
+                <div class="card fade-in stagger-3">
+                    <h3>YouTube</h3>
+                    <p>Watch full episodes of "Love & Coconut" and other content on our YouTube channel.</p>
+                    <a href="https://www.youtube.com/@LikLikMedia" target="_blank" class="btn btn-primary">Watch on YouTube</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activity Timeline -->
+        <section class="activity-timeline">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Recent Activity</h2>
+                <p class="section-subtitle">What we've been up to lately</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item fade-in stagger-1">
+                    <div class="timeline-date">June 2024</div>
+                    <div class="timeline-content">
+                        <h3>Love & Coconut Trailer Released</h3>
+                        <p>Our latest movie production trailer is now available on Facebook, TikTok, and YouTube.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in stagger-2">
+                    <div class="timeline-date">March 2024</div>
+                    <div class="timeline-content">
+                        <h3>Launched New Website</h3>
+                        <p>Completely redesigned our website with improved user experience and new features.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in stagger-3">
+                    <div class="timeline-date">February 2024</div>
+                    <div class="timeline-content">
+                        <h3>50th Story Published</h3>
+                        <p>Milestone achievement: We've now published 50 PNG storytellers on our platform.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item fade-in stagger-4">
+                    <div class="timeline-date">January 2024</div>
+                    <div class="timeline-content">
+                        <h3>Community Workshop</h3>
+                        <p>Hosted a storytelling workshop for local youth in Port Moresby.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="Company_Logo-removebg-preview.png" alt="LiklikDrama" class="footer-logo-image">
+                    <h3>LiklikDrama</h3>
+                    <p>Local Faces. Real Sales. Real Stories.</p>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html">Shop Promotion Video (K550)</a></li>
+                    <li><a href="services.html">Live Selling (K830)</a></li>
+                    <li><a href="services.html">Story Writing</a></li>
+                    <li><a href="services.html">Media Management (Coming Soon)</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="updates.html">Updates</a></li>
+                    <li><a href="media.html">Media</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:info@liklikmedia.com">info@liklikmedia.com</a></li>
+                    <li><a href="https://wa.me/67570021249">WhatsApp: +675 70021249</a></li>
+                    <li><a href="https://www.facebook.com/liklikmediaand" target="_blank">Facebook</a></li>
+                    <li><a href="https://vm.tiktok.com/ZS9jfkU7DwJtF-w0vWd/" target="_blank">TikTok</a></li>
+                    <li><a href="https://www.youtube.com/@LikLikMedia" target="_blank">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 LiklikDrama. Made in Papua New Guinea | All rights reserved.</p>
+            <p class="footer-tagline">Empowering local businesses and storytellers through authentic cultural media</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

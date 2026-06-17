@@ -1,0 +1,16 @@
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Large media directories
+Love & Coconut Trailer/
+LiklikDrama Viral Vids Mon Content/
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
