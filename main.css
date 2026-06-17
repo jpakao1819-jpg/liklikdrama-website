@@ -1115,24 +1115,24 @@ section {
 
 @media (max-width: 480px) {
   .main-nav {
-    width: 50px;
+    width: 40px;
   }
   
   .nav-link {
-    font-size: 0.7rem;
-    padding: 0.5rem 0;
+    font-size: 0.6rem;
+    padding: 0.3rem 0;
   }
   
   main {
-    margin-right: 50px;
+    margin-right: 40px;
   }
   
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .section-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .footer-grid {
@@ -1140,19 +1140,19 @@ section {
   }
   
   .main-footer {
-    margin-right: 50px;
+    margin-right: 40px;
   }
   
   .timeline-item {
-    padding: 1rem;
+    padding: 0.75rem;
   }
   
   .timeline-content h3 {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   
   .card h3 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   
   .episode-grid {
@@ -1165,10 +1165,10 @@ section {
   
   .video-container,
   .video-caption {
-    width: 90%;
+    width: 70%;
   }
   
   .video-caption {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 }
