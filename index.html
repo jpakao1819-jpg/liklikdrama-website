@@ -3,206 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiklikDrama - Cultural Entertainment</title>
+    <title>LiklikDrama - Local Faces. Real Sales. Real Stories.</title>
+    <meta name="description" content="PNG cultural entertainment platform empowering local shops and storytellers through video promotion, live selling, and community storytelling.">
+    <meta name="keywords" content="PNG culture, local business promotion, video marketing, Tok Pisin stories, cultural entertainment">
     <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 3D Opening Animation -->
-    <div class="opening-animation" id="openingAnimation">
-        <div class="opening-3d-container">
-            <img src="Company_Logo-removebg-preview.png" alt="LiklikDrama Logo" class="opening-3d-logo">
-            <div class="opening-particles" id="openingParticles"></div>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">LIKLIKDRAMA</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
         </div>
     </div>
 
-    <!-- 3D DRAMA LOGO BACKGROUND -->
-    <div class="drama-logo-3d"></div>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
 
-    <!-- Decorative Elements -->
-    <div class="decorative-container">
-        <div class="decorative-element"></div>
-        <div class="decorative-element"></div>
-        <div class="decorative-element"></div>
-        <div class="decorative-element"></div>
-        <div class="decorative-element"></div>
-    </div>
-
-    <!-- Sticky Transparent Logo -->
-    <div class="sticky-logo" id="stickyLogo">
-        <img src="Company_Logo-removebg-preview.png" alt="LiklikDrama Logo" class="sticky-logo-image">
-    </div>
-
-    <!-- Navigation -->
+    <!-- Surprising Navigation - Vertical Right Side -->
     <nav class="main-nav">
-        <div class="nav-content">
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#production" class="nav-link">Production</a></li>
-                <li><a href="#interaction" class="nav-link">Interaction</a></li>
-                <li><a href="#about" class="nav-link">About Us</a></li>
-            </ul>
-        </div>
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="media.html" class="nav-link">Media</a>
+        <a href="updates.html" class="nav-link">Updates</a>
+        <a href="contact.html" class="nav-link">Contact</a>
     </nav>
 
-    <!-- Header -->
-    <header class="main-header">
-        <div class="header-content">
-            <div class="logo-section">
-                <img src="Company_Logo-removebg-preview.png" alt="LiklikDrama Logo" class="logo-image">
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content Container -->
-    <main class="main-content">
-        
-        <!-- Home Section -->
-        <section id="home" class="hero-section">
-            <div class="video-background">
-                <video autoplay muted loop playsinline class="background-video">
-                    <source src="LiklikVid.mp4" type="video/mp4">
-                </video>
-            </div>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background"></div>
             <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Welcome to LiklikDrama</h1>
-                    <p class="hero-subtitle">Cultural Entertainment & Storytelling Excellence</p>
+                <h1 class="hero-title fade-in stagger-1">Local Faces. Real Sales. Real Stories.</h1>
+                <p class="hero-subtitle fade-in stagger-2">Empowering PNG businesses and storytellers through authentic cultural media</p>
+                <div class="hero-buttons fade-in stagger-3">
+                    <a href="services.html" class="btn btn-primary">Promote Your Shop</a>
+                    <a href="updates.html" class="btn btn-secondary">Join as a Writer</a>
+                    <a href="media.html" class="btn btn-accent">Watch Us on TikTok</a>
                 </div>
             </div>
         </section>
 
-        <!-- Production Section -->
-        <section id="production" class="content-section">
-            <div class="section-header">
-                <h2>Drama Liklik Culture Sphere</h2>
-                <p>Marketing Services for Local Businesses</p>
+        <!-- Services Preview -->
+        <section class="services-preview">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Professional marketing solutions for PNG local businesses</p>
             </div>
-            <div class="content-grid">
-                <div class="content-bubble">
-                    <h2>1. Local Shop Promotion Video</h2>
-                    <p>Most chosen by local shops - Show your shop to real local customers</p>
-                    <ul>
-                        <li>Food / Product reviews by local creators</li>
-                        <li>Ready for Facebook & TikTok posting</li>
-                        <li>Reach authentic local audience</li>
-                        <li>Professional video production</li>
-                    </ul>
-                    <div class="price-tag">K550</div>
+            
+            <div class="grid grid-2">
+                <div class="card fade-in stagger-1">
+                    <div class="preview-video">
+                        <video autoplay muted loop playsinline>
+                            <source src="promo vid.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <h3>Shop Promotion Video</h3>
+                    <p>Show your shop to real local customers with professional video marketing</p>
+                    <div class="price">K550</div>
+                    <a href="services.html" class="btn btn-primary">Learn More</a>
                 </div>
-                <div class="content-bubble">
-                    <h2>2. Live Selling for Local Customers</h2>
-                    <p>Best for retail & promotions - Sell live to POM buyers</p>
-                    <ul>
-                        <li>Flash deals that push instant action</li>
-                        <li>Drive walk-in customers & orders</li>
-                        <li>Real-time customer engagement</li>
-                        <li>Immediate sales conversion</li>
-                    </ul>
-                    <div class="price-tag">K830</div>
-                </div>
-                <div class="content-bubble">
-                    <h2>Why Choose LiklikDrama?</h2>
-                    <p>Local faces, real sales - More walk-in customers!</p>
-                    <ul>
-                        <li>Authentic local creators</li>
-                        <li>Real customer connections</li>
-                        <li>Proven results</li>
-                        <li>Targeted POM market</li>
-                    </ul>
-                    <div class="tagline">"More walk-in Customers! LOCAL FACES. REAL SALES!"</div>
-                </div>
-                <div class="content-bubble">
-                    <h2>Find Us Online</h2>
-                    <p>Search Liklik Drama on TikTok</p>
-                    <ul>
-                        <li>Follow our content</li>
-                        <li>See client success stories</li>
-                        <li>Get marketing tips</li>
-                        <li>Join our community</li>
-                    </ul>
-                    <div class="search-prompt">Search Liklik Drama on TikTok</div>
+                
+                <div class="card fade-in stagger-2">
+                    <h3>Live Selling</h3>
+                    <p>Sell live to POM buyers through our live streaming platform</p>
+                    <div class="price">K830</div>
+                    <a href="services.html" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
         </section>
 
-        <!-- Interaction Section -->
-        <section id="interaction" class="content-section">
-            <div class="section-header">
-                <h2>Community Interaction</h2>
-                <p>Engage, Connect, and Experience Cultural Unity</p>
+        <!-- Latest Updates Preview -->
+        <section class="updates-preview">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Latest Updates</h2>
+                <p class="section-subtitle">Stay informed about our latest news and opportunities</p>
             </div>
-            <div class="content-grid">
-                <div class="content-bubble">
-                    <h2>Community Hub</h2>
-                    <p>Join our vibrant community platform for cultural exchange and collaboration.</p>
-                    <ul>
-                        <li><a href="#" class="feature-link">Discussion Forums</a></li>
-                        <li><a href="#" class="feature-link">Community Events</a></li>
-                        <li><a href="#" class="feature-link">Cultural Workshops</a></li>
-                        <li><a href="#" class="feature-link">Story Sharing</a></li>
-                    </ul>
+            
+            <div class="grid grid-3">
+                <div class="card fade-in stagger-1">
+                    <div class="update-badge">New</div>
+                    <h3>Love & Coconut Trailer</h3>
+                    <p>Watch our latest movie production - now available on social media</p>
+                    <a href="media.html" class="btn btn-secondary">Watch Trailer</a>
                 </div>
-                <div class="content-bubble">
-                    <h2>Interactive Content</h2>
-                    <p>Engaging interactive experiences bringing culture to digital life.</p>
-                    <ul>
-                        <li><a href="#" class="feature-link">Cultural Games</a></li>
-                        <li><a href="#" class="feature-link">Interactive Stories</a></li>
-                        <li><a href="#" class="feature-link">Virtual Events</a></li>
-                        <li><a href="#" class="feature-link">Cultural Challenges</a></li>
-                    </ul>
+                
+                <div class="card fade-in stagger-2">
+                    <div class="update-badge">Hot</div>
+                    <h3>Job Openings</h3>
+                    <p>We're looking for creative storytellers to join our team</p>
+                    <a href="updates.html" class="btn btn-secondary">View Positions</a>
                 </div>
-                <div class="content-bubble">
-                    <h2>Social Platform</h2>
-                    <p>Connect with cultural enthusiasts worldwide through our social features.</p>
-                    <ul>
-                        <li><a href="#" class="feature-link">Mobile App</a></li>
-                        <li><a href="#" class="feature-link">Photo Sharing</a></li>
-                        <li><a href="#" class="feature-link">Video Platform</a></li>
-                        <li><a href="#" class="feature-link">Live Chat</a></li>
-                    </ul>
+                
+                <div class="card fade-in stagger-3">
+                    <div class="update-badge">News</div>
+                    <h3>Community Events</h3>
+                    <p>Join our upcoming storytelling workshops and events</p>
+                    <a href="updates.html" class="btn btn-secondary">Learn More</a>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="content-section">
-            <div class="section-header">
-                <h2>About LiklikDrama</h2>
-                <p>Preserving Cultural Heritage Through Storytelling</p>
+        <!-- Quick Stats -->
+        <section class="stats-section">
+            <div class="section-header fade-in">
+                <h2 class="section-title">Our Impact</h2>
+                <p class="section-subtitle">Numbers that speak for themselves</p>
             </div>
-            <div class="content-grid">
-                <div class="content-bubble">
-                    <h2>Our Mission</h2>
-                    <p>Dedicated to preserving and promoting cultural heritage through innovative storytelling and entertainment experiences.</p>
-                    <ul>
-                        <li>Cultural Preservation</li>
-                        <li>Quality Entertainment</li>
-                        <li>Community Building</li>
-                        <li>Global Reach</li>
-                    </ul>
+            
+            <div class="grid grid-4">
+                <div class="card fade-in stagger-1">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Local Businesses Helped</div>
                 </div>
-                <div class="content-bubble">
-                    <h2>Our Team</h2>
-                    <p>Passionate professionals committed to cultural excellence and storytelling innovation.</p>
-                    <ul>
-                        <li>Creative Directors</li>
-                        <li>Technical Experts</li>
-                        <li>Cultural Advisors</li>
-                        <li>Global Partners</li>
-                    </ul>
+                
+                <div class="card fade-in stagger-2">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">PNG Storytellers</div>
                 </div>
-                <div class="content-bubble">
-                    <h2>Our Impact</h2>
-                    <p>Making a difference in communities through cultural education and entertainment.</p>
-                    <ul>
-                        <li>100+ Cultural Awards</li>
-                        <li>100+ Productions</li>
-                        <li>50+ Community Partners</li>
-                        <li>10+ TV Channels</li>
-                        <li>1000+ Global Reach</li>
-                        <li>10+ Educational Programs</li>
-                    </ul>
+                
+                <div class="card fade-in stagger-3">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Social Media Followers</div>
+                </div>
+                
+                <div class="card fade-in stagger-4">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Client Satisfaction</div>
                 </div>
             </div>
         </section>
@@ -210,28 +143,50 @@
 
     <!-- Footer -->
     <footer class="main-footer">
-        <div class="footer-content">
+        <div class="footer-grid">
             <div class="footer-section">
-                <h3>Let's Connect</h3>
-                <p>Join our growing community of local creators and businesses</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/liklikmedia" class="facebook-link" title="Follow us on Facebook">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                        <span>Follow us</span>
-                    </a>
-                    <a href="https://www.tiktok.com/@liklik.drama" class="tiktok-link" title="Watch us on TikTok">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.88-.27-1.85-.36-2.71-.07-1.34.43-2.33 1.76-2.33 3.18 0 .42.08.84.24 1.22.46 1.13 1.58 1.99 2.85 1.99 1.57 0 2.97-1.22 3.05-2.77.02-.18.02-.36.02-.54.01-3.34.01-6.68 0-10.02z"/>
-                        </svg>
-                        <span>Watch us</span>
-                    </a>
+                <div class="footer-logo">
+                    <img src="Company_Logo-removebg-preview.png" alt="LiklikDrama" class="footer-logo-image">
+                    <h3>LiklikDrama</h3>
+                    <p>Local Faces. Real Sales. Real Stories.</p>
                 </div>
             </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html">Shop Promotion Video (K550)</a></li>
+                    <li><a href="services.html">Live Selling (K830)</a></li>
+                    <li><a href="services.html">Story Writing</a></li>
+                    <li><a href="services.html">Media Management (Coming Soon)</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="updates.html">Updates</a></li>
+                    <li><a href="media.html">Media</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:info@liklikmedia.com">info@liklikmedia.com</a></li>
+                    <li><a href="https://wa.me/67570021249">WhatsApp: +675 70021249</a></li>
+                    <li><a href="https://www.facebook.com/liklikmediaand" target="_blank">Facebook</a></li>
+                    <li><a href="https://vm.tiktok.com/ZS9jfkU7DwJtF-w0vWd/" target="_blank">TikTok</a></li>
+                    <li><a href="https://www.youtube.com/@LikLikMedia" target="_blank">YouTube</a></li>
+                </ul>
+            </div>
         </div>
+        
         <div class="footer-bottom">
-            <p>Made with love in Papua New Guinea | &copy; 2024 LiklikDrama. All rights reserved.</p>
+            <p>&copy; 2024 LiklikDrama. Made in Papua New Guinea | All rights reserved.</p>
+            <p class="footer-tagline">Empowering local businesses and storytellers through authentic cultural media</p>
         </div>
     </footer>
 
