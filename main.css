@@ -1109,7 +1109,7 @@ section {
   
   .video-container,
   .video-caption {
-    width: 50%;
+    width: 70%;
   }
 }
 
@@ -1118,16 +1118,21 @@ section {
     width: 50px;
   }
   
+  .nav-link {
+    font-size: 0.7rem;
+    padding: 0.5rem 0;
+  }
+  
   main {
     margin-right: 50px;
   }
   
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   .section-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   .footer-grid {
@@ -1160,6 +1165,10 @@ section {
   
   .video-container,
   .video-caption {
-    width: 50%;
+    width: 90%;
+  }
+  
+  .video-caption {
+    font-size: 1rem;
   }
 }
