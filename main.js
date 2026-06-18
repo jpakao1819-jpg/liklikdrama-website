@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const episodeTitle = document.getElementById('episode-title');
     const episodeDescription = document.getElementById('episode-description');
     
-    if (episodeBtns.length > 0) {
+    if (episodeBtns.length > 0 && mainVideo) {
         episodeBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 // Remove active class from all buttons
