@@ -596,7 +596,7 @@ section {
 
 /* Video Container */
 .video-container {
-  width: 30%;
+  width: 50%;
   height: auto;
   margin: 0 auto;
   overflow: hidden;
@@ -631,7 +631,7 @@ section {
   border-top: none;
   border-radius: 0 0 8px 8px;
   text-align: center;
-  width: 30%;
+  width: 50%;
 }
 
 /* Episode Description */
@@ -1109,7 +1109,7 @@ section {
   
   .video-container,
   .video-caption {
-    width: 70%;
+    width: 80%;
   }
 }
 
@@ -1165,7 +1165,7 @@ section {
   
   .video-container,
   .video-caption {
-    width: 70%;
+    width: 90%;
   }
   
   .video-caption {
