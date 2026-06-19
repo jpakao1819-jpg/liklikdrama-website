@@ -13,6 +13,17 @@ window.addEventListener('load', function() {
     }
 });
 
+// Scroll Progress Indicator
+window.addEventListener('scroll', () => {
+    const scrollProgress = document.querySelector('.scroll-progress');
+    if (scrollProgress) {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        scrollProgress.style.width = scrollPercent + '%';
+    }
+});
+
 // Custom Cursor
 const cursor = document.querySelector('.custom-cursor');
 if (cursor) {
@@ -21,12 +32,20 @@ if (cursor) {
         cursor.style.top = e.clientY + 'px';
     });
 
-    document.querySelectorAll('a, button, .btn, .card').forEach(el => {
+    document.querySelectorAll('a, button, .btn, .card, .episode-btn, .nav-link').forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.classList.add('hover');
         });
         el.addEventListener('mouseleave', () => {
             cursor.classList.remove('hover');
+        });
+        
+        // Touch effects for mobile
+        el.addEventListener('touchstart', () => {
+            el.style.transform = 'scale(0.98)';
+        });
+        el.addEventListener('touchend', () => {
+            el.style.transform = '';
         });
     });
 }
