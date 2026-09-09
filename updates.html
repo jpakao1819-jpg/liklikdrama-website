@@ -185,9 +185,54 @@
                     <p><strong>Length:</strong> 500-2000 words</p>
                     <p><strong>Topics:</strong> PNG culture, life experiences, community stories</p>
                 </div>
-                <a href="mailto:info@liklikmedia.com?subject=Story Submission - LiklikDrama" class="btn btn-primary">Submit Your Story</a>
+                <button id="openStoryModal" class="btn btn-primary">Write Your Story</button>
             </div>
         </section>
+
+        <!-- Story Submission Modal -->
+        <div id="storyModal" class="story-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Write Your Story</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="storyForm">
+                        <div class="form-group">
+                            <label for="storyTitle">Story Title</label>
+                            <input type="text" id="storyTitle" name="storyTitle" required placeholder="Enter your story title">
+                        </div>
+                        <div class="form-group">
+                            <label for="authorName">Your Name</label>
+                            <input type="text" id="authorName" name="authorName" required placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="authorEmail">Your Email</label>
+                            <input type="email" id="authorEmail" name="authorEmail" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="storyLanguage">Language</label>
+                            <select id="storyLanguage" name="storyLanguage">
+                                <option value="tokpisin">Tok Pisin</option>
+                                <option value="english">English</option>
+                                <option value="both">Both Tok Pisin and English</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="storyContent">Your Story (500-2000 words)</label>
+                            <textarea id="storyContent" name="storyContent" rows="15" required placeholder="Write your story here... Share your cultural narratives, personal experiences, or creative fiction about PNG culture, life experiences, or community stories."></textarea>
+                            <div class="word-count">
+                                <span id="wordCount">0</span> words
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit Story</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->

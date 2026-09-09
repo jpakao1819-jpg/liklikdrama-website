@@ -194,3 +194,96 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Story Submission Modal
+const openStoryModalBtn = document.getElementById('openStoryModal');
+const storyModal = document.getElementById('storyModal');
+const closeStoryModalBtns = document.querySelectorAll('.close-modal, .close-modal-btn');
+const storyForm = document.getElementById('storyForm');
+const storyContent = document.getElementById('storyContent');
+const wordCount = document.getElementById('wordCount');
+
+// Open modal
+if (openStoryModalBtn) {
+    openStoryModalBtn.addEventListener('click', () => {
+        storyModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+}
+
+// Close modal
+closeStoryModalBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        storyModal.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+// Close modal when clicking outside
+storyModal.addEventListener('click', (e) => {
+    if (e.target === storyModal) {
+        storyModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+// Word count functionality
+if (storyContent && wordCount) {
+    storyContent.addEventListener('input', () => {
+        const text = storyContent.value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        wordCount.textContent = words;
+        
+        // Validate word count
+        if (words >= 500 && words <= 2000) {
+            wordCount.classList.remove('invalid');
+            wordCount.classList.add('valid');
+        } else {
+            wordCount.classList.remove('valid');
+            wordCount.classList.add('invalid');
+        }
+    });
+}
+
+// Form submission
+if (storyForm) {
+    storyForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('storyTitle').value;
+        const author = document.getElementById('authorName').value;
+        const email = document.getElementById('authorEmail').value;
+        const language = document.getElementById('storyLanguage').value;
+        const content = document.getElementById('storyContent').value;
+        
+        // Validate word count
+        const words = content.trim().split(/\s+/).length;
+        if (words < 500 || words > 2000) {
+            alert('Your story must be between 500 and 2000 words. Current word count: ' + words);
+            return;
+        }
+        
+        // Create email body
+        const emailBody = `Story Submission - LiklikDrama
+
+Title: ${title}
+Author: ${author}
+Email: ${email}
+Language: ${language}
+Word Count: ${words}
+
+Story Content:
+${content}`;
+        
+        // Open email client
+        const mailtoLink = `mailto:info@liklikmedia.com?subject=Story Submission - ${encodeURIComponent(title)}&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = mailtoLink;
+        
+        // Close modal and reset form
+        storyModal.classList.remove('active');
+        document.body.style.overflow = '';
+        storyForm.reset();
+        wordCount.textContent = '0';
+        wordCount.classList.remove('valid', 'invalid');
+    });
+}
