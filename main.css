@@ -610,6 +610,12 @@ section {
   border-radius: 4px;
 }
 
+#storyForm textarea {
+  resize: vertical;
+  min-height: 200px;
+  line-height: 1.6;
+}
+
 #storyForm select {
   cursor: pointer;
   appearance: none;
@@ -625,12 +631,6 @@ section {
   outline: none;
   border-color: var(--primary-yellow);
   background: rgba(255, 255, 255, 0.08);
-}
-
-#storyForm textarea {
-  resize: vertical;
-  min-height: 200px;
-  line-height: 1.6;
 }
 
 .word-count {
