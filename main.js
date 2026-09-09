@@ -247,7 +247,7 @@ if (storyContent && wordCount) {
 
 // Form submission
 if (storyForm) {
-    storyForm.addEventListener('submit', function(e) {
+    storyForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const title = document.getElementById('storyTitle').value;
@@ -255,6 +255,7 @@ if (storyForm) {
         const email = document.getElementById('authorEmail').value;
         const language = document.getElementById('storyLanguage').value;
         const content = document.getElementById('storyContent').value;
+        const submitBtn = storyForm.querySelector('button[type="submit"]');
         
         // Validate word count
         const words = content.trim().split(/\s+/).length;
@@ -263,8 +264,47 @@ if (storyForm) {
             return;
         }
         
-        // Create email body
-        const emailBody = `Story Submission - LiklikDrama
+        // Show loading state
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+        
+        // Submit to backend API
+        try {
+            const response = await fetch('http://localhost:5000/api/stories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    author_name: author,
+                    author_email: email,
+                    language: language,
+                    content: content
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                alert('Story submitted successfully! Story ID: ' + data.story_id);
+                
+                // Close modal and reset form
+                storyModal.classList.remove('active');
+                document.body.style.overflow = '';
+                storyForm.reset();
+                wordCount.textContent = '0';
+                wordCount.classList.remove('valid', 'invalid');
+            } else {
+                alert('Error submitting story: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error submitting story:', error);
+            
+            // Fallback to email if backend is not available
+            alert('Backend server not available. Using email fallback.');
+            
+            const emailBody = `Story Submission - LiklikDrama
 
 Title: ${title}
 Author: ${author}
@@ -274,16 +314,20 @@ Word Count: ${words}
 
 Story Content:
 ${content}`;
-        
-        // Open email client
-        const mailtoLink = `mailto:info@liklikmedia.com?subject=Story Submission - ${encodeURIComponent(title)}&body=${encodeURIComponent(emailBody)}`;
-        window.location.href = mailtoLink;
-        
-        // Close modal and reset form
-        storyModal.classList.remove('active');
-        document.body.style.overflow = '';
-        storyForm.reset();
-        wordCount.textContent = '0';
-        wordCount.classList.remove('valid', 'invalid');
+            
+            const mailtoLink = `mailto:info@liklikmedia.com?subject=Story Submission - ${encodeURIComponent(title)}&body=${encodeURIComponent(emailBody)}`;
+            window.location.href = mailtoLink;
+            
+            // Close modal and reset form
+            storyModal.classList.remove('active');
+            document.body.style.overflow = '';
+            storyForm.reset();
+            wordCount.textContent = '0';
+            wordCount.classList.remove('valid', 'invalid');
+        } finally {
+            // Remove loading state
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
     });
 }
