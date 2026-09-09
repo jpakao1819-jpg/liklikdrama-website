@@ -493,31 +493,6 @@ section {
   font-weight: 300;
 }
 
-/* Footer Logo */
-.footer-logo {
-  margin-bottom: 1.5rem;
-}
-
-.footer-logo-image {
-  max-width: 150px;
-  height: auto;
-  margin-bottom: 1rem;
-}
-
-.footer-logo h3 {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  color: var(--primary-yellow);
-  margin-bottom: 0.5rem;
-  letter-spacing: 2px;
-}
-
-.footer-logo p {
-  color: var(--off-white);
-  font-size: 0.9rem;
-  margin: 0;
-}
-
 /* Footer Tagline */
 .footer-tagline {
   margin-top: 0.5rem;

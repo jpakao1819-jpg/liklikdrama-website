@@ -126,15 +126,7 @@ if (contactForm) {
     });
 }
 
-// Mobile Menu Toggle (for future enhancement)
-const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
 
-if (mobileMenuToggle && mobileMenu) {
-    mobileMenuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-    });
-}
 
 // Video Autoplay Handling
 const videos = document.querySelectorAll('video');
@@ -158,18 +150,9 @@ yearElements.forEach(el => {
 // Add loading class to body for CSS transitions
 document.body.classList.add('loaded');
 
-// Performance Optimization: Debounce Resize Events
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        // Handle resize-dependent logic here
-    }, 250);
-});
 
-// Console Welcome Message
-console.log('%c LiklikDrama ', 'background: #FFD700; color: #000000; font-size: 20px; font-weight: bold;');
-console.log('%c Local Faces. Real Sales. Real Stories. ', 'color: #FFD700; font-size: 14px;');
+
+
 
 // Episode Selector Functionality
 document.addEventListener('DOMContentLoaded', function() {
