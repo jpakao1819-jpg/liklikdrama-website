@@ -1419,3 +1419,129 @@ section {
     font-size: 0.9rem;
   }
 }
+
+/* =====================================================
+   PREMIUM POLISH LAYER — additive only, no overrides
+   to loading/transition logic
+   ===================================================== */
+
+/* Animated gold grain texture on hero */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(255,215,0,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,193,7,0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glowing underline on hero title */
+.hero-title {
+  text-shadow:
+    0 0 40px rgba(255,215,0,0.25),
+    0 2px 0 rgba(0,0,0,0.5);
+}
+
+/* Subtle glow on hero subtitle */
+.hero-subtitle {
+  text-shadow: 0 0 20px rgba(255,255,255,0.08);
+  letter-spacing: 0.5px;
+}
+
+/* Nav link spacing and subtle glow on active */
+.nav-link.active {
+  text-shadow: 0 0 12px rgba(255,215,0,0.5);
+}
+
+/* Polished nav bar — gold bottom edge glow */
+.main-nav {
+  box-shadow: 0 2px 24px rgba(255,215,0,0.08);
+}
+
+/* Card corner accent — top-left gold line */
+.card {
+  border-radius: 2px;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: var(--primary-yellow);
+  transition: height 0.4s ease;
+}
+.card:hover::after {
+  height: 100%;
+}
+
+/* Button — sharper shadow on hover */
+.btn:hover {
+  box-shadow:
+    0 12px 36px rgba(255,215,0,0.35),
+    0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Section titles — thin gold rule below */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: var(--primary-yellow);
+  margin: 0.75rem auto 0;
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(255,215,0,0.5);
+}
+
+/* Stat numbers — glow */
+.stat-number {
+  text-shadow: 0 0 20px rgba(255,215,0,0.35);
+}
+
+/* Update badge — sharper */
+.update-badge {
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(255,215,0,0.25);
+  letter-spacing: 2px;
+}
+
+/* Footer — gold top rule glow */
+.main-footer {
+  border-top: 1px solid rgba(255,215,0,0.15);
+  box-shadow: 0 -4px 32px rgba(255,215,0,0.04);
+}
+
+/* Scroll progress — glowing bar */
+.scroll-progress {
+  box-shadow: 0 0 8px rgba(255,215,0,0.6);
+}
+
+/* Loading logo glow */
+.loading-logo {
+  text-shadow: 0 0 40px rgba(255,215,0,0.4);
+  letter-spacing: 8px;
+}
+
+/* Episode buttons — gold glow on active */
+.episode-btn.active {
+  box-shadow: 0 0 16px rgba(255,215,0,0.35);
+}
+
+/* Price text glow */
+.price {
+  text-shadow: 0 0 16px rgba(255,215,0,0.3);
+}
+
+/* Smooth page body fade-in on load */
+body {
+  animation: bodyFadeIn 0.6s ease forwards;
+}
+
+@keyframes bodyFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
