@@ -167,26 +167,26 @@ body::before {
   pointer-events: none;
 }
 
-/* Surprising Navigation - Vertical Right Side */
+/* Navigation - Top Bar */
 .main-nav {
   position: fixed;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
   z-index: 1000;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 2rem 1rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  padding: 1rem 2rem;
   background: rgba(0, 0, 0, 0.9);
-  border-left: var(--border-medium);
+  border-bottom: var(--border-medium);
   backdrop-filter: blur(10px);
 }
 
 .nav-link {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  writing-mode: horizontal-tb;
   font-family: var(--font-serif);
   font-size: 1.05rem;
   color: var(--off-white);
@@ -194,7 +194,7 @@ body::before {
   letter-spacing: 2px;
   text-transform: uppercase;
   transition: var(--transition-fast);
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   position: relative;
 }
 
@@ -202,9 +202,9 @@ body::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0;
-  width: 2px;
-  height: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
   background: var(--primary-yellow);
   transition: var(--transition-medium);
 }
@@ -216,13 +216,13 @@ body::before {
 
 .nav-link:hover::before,
 .nav-link.active::before {
-  height: 100%;
+  width: 100%;
 }
 
 /* Main Content */
 main {
-  margin-right: 80px;
-  min-height: 100vh;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
 }
 
 /* Fade-in Animations */
@@ -398,12 +398,14 @@ section {
 
 /* Cards */
 .card {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.05);
   border: var(--border-thin);
   padding: var(--spacing-xl);
   transition: var(--transition-medium);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .card::before {
@@ -1371,6 +1373,49 @@ section {
   }
   
   .video-caption {
+    font-size: 0.9rem;
+  }
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Enhanced Mobile Experience */
+@media (max-width: 768px) {
+  .main-nav {
+    padding: 1rem 0.5rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nav-link {
+    font-size: 0.9rem !important;
+    padding: 0.2rem 0.5rem !important;
+  }
+  main, .main-footer {
+    margin-right: 0 !important;
+    margin-bottom: 0;
+  }
+  .video-container, .video-caption {
+    width: 100% !important;
+  }
+  .episode-buttons {
+    gap: 0.5rem;
+  }
+  .episode-btn {
+    padding: 0.8rem 0.5rem;
     font-size: 0.9rem;
   }
 }
