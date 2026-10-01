@@ -1,352 +1,179 @@
-// LiklikDrama Website - Main JavaScript
+// Main Script for LiklikDrama Website
 
-// Loading Screen
-window.addEventListener('load', function() {
-    const loadingScreen = document.querySelector('.loading-screen');
-    if (loadingScreen) {
-        setTimeout(() => {
-            loadingScreen.classList.add('fade-out');
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 800);
-        }, 2000);
+// Mobile Navigation Toggle
+const hamburger = document.getElementById('hamburger');
+const mainNav = document.getElementById('mainNav');
+const navSelect = document.getElementById('navSelect');
+
+if (hamburger) {
+  hamburger.addEventListener('click', function() {
+    this.classList.toggle('active');
+    mainNav.classList.toggle('active');
+  });
+}
+
+// Navigation Select Dropdown
+if (navSelect) {
+  navSelect.addEventListener('change', function() {
+    if (this.value) {
+      window.location.href = this.value;
+      this.value = ''; // Reset select
     }
+  });
+}
+
+// Close menu when a link is clicked
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function() {
+    hamburger.classList.remove('active');
+    mainNav.classList.remove('active');
+  });
 });
 
 // Scroll Progress Indicator
-window.addEventListener('scroll', () => {
-    const scrollProgress = document.querySelector('.scroll-progress');
-    if (scrollProgress) {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        scrollProgress.style.width = scrollPercent + '%';
-    }
+window.addEventListener('scroll', function() {
+  const scrollProgress = document.querySelector('.scroll-progress');
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (window.scrollY / height) * 100;
+  scrollProgress.style.width = scrolled + '%';
 });
 
 // Custom Cursor
-const cursor = document.querySelector('.custom-cursor');
-if (cursor) {
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
+const customCursor = document.querySelector('.custom-cursor');
+document.addEventListener('mousemove', function(e) {
+  customCursor.style.left = e.clientX + 'px';
+  customCursor.style.top = e.clientY + 'px';
+});
 
-    document.querySelectorAll('a, button, .btn, .card, .episode-btn, .nav-link').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursor.classList.add('hover');
-        });
-        el.addEventListener('mouseleave', () => {
-            cursor.classList.remove('hover');
-        });
-        
-        // Touch effects for mobile
-        el.addEventListener('touchstart', () => {
-            el.style.transform = 'scale(0.98)';
-        });
-        el.addEventListener('touchend', () => {
-            el.style.transform = '';
-        });
-    });
-}
+// Hover effect on interactive elements
+document.querySelectorAll('a, button').forEach(element => {
+  element.addEventListener('mouseenter', () => customCursor.classList.add('hover'));
+  element.addEventListener('mouseleave', () => customCursor.classList.remove('hover'));
+});
 
-// Scroll-triggered Fade-in Animations
+// Loading Screen
+window.addEventListener('load', function() {
+  const loadingScreen = document.querySelector('.loading-screen');
+  setTimeout(() => {
+    loadingScreen.classList.add('fade-out');
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 800);
+  }, 1500);
+});
+
+// Fade-in Animation on Scroll
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
 };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-        }
-    });
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
 }, observerOptions);
 
-// Observe all fade-in elements
-document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
-    observer.observe(el);
+document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(element => {
+  observer.observe(element);
 });
 
-// Navigation Active State
-const currentPage = window.location.pathname.split('/').pop();
-const navLinks = document.querySelectorAll('.nav-link');
+// Episode Selector Script
+const episodeButtons = document.querySelectorAll('.episode-btn');
+const mainVideo = document.getElementById('main-video');
+const episodeTitle = document.getElementById('episode-title');
+const episodeDescription = document.getElementById('episode-description');
 
-navLinks.forEach(link => {
-    const linkPage = link.getAttribute('href');
-    if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
-        link.classList.add('active');
-    } else {
-        link.classList.remove('active');
-    }
-});
+if (episodeButtons.length > 0) {
+  episodeButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const videoSrc = this.getAttribute('data-video');
+      const title = this.getAttribute('data-title');
+      const description = this.getAttribute('data-description');
 
-// Smooth Scroll for Anchor Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+      // Update active button
+      episodeButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+
+      // Update video player
+      if (videoSrc) {
+        mainVideo.src = videoSrc;
+        mainVideo.load();
+      } else {
+        mainVideo.src = '';
+        mainVideo.load();
+      }
+
+      // Update title and description
+      if (episodeTitle) {
+        episodeTitle.textContent = title;
+      }
+      if (episodeDescription) {
+        episodeDescription.textContent = description;
+      }
+
+      // Scroll to video player
+      if (mainVideo) {
+        mainVideo.parentElement.parentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     });
-});
-
-// Parallax Effect on Scroll
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const heroContent = document.querySelector('.hero-content');
-    
-    if (heroContent) {
-        heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
-        heroContent.style.opacity = 1 - (scrolled * 0.002);
-    }
-});
-
-// Form Handling
-const contactForm = document.querySelector('form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const subject = formData.get('subject');
-        const message = formData.get('message');
-        
-        const mailtoLink = `mailto:info@liklikmedia.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-        
-        window.location.href = mailtoLink;
-    });
+  });
 }
 
-
-
-// Video Autoplay Handling
-const videos = document.querySelectorAll('video');
-videos.forEach(video => {
-    video.addEventListener('canplay', () => {
-        video.play().catch(e => {
-            console.log('Autoplay prevented:', e);
-        });
-    });
-});
-
-// Dynamic Year in Footer
-const yearElements = document.querySelectorAll('.footer-bottom p');
-yearElements.forEach(el => {
-    if (el.textContent.includes('©')) {
-        const currentYear = new Date().getFullYear();
-        el.textContent = el.textContent.replace('2024', currentYear);
-    }
-});
-
-// Add loading class to body for CSS transitions
-document.body.classList.add('loaded');
-
-
-
-
-
-// Episode Selector Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const episodeBtns = document.querySelectorAll('.episode-btn');
-    const mainVideo = document.getElementById('main-video');
-    const episodeTitle = document.getElementById('episode-title');
-    const episodeDescription = document.getElementById('episode-description');
-    
-    if (episodeBtns.length > 0 && mainVideo) {
-        episodeBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all buttons
-                episodeBtns.forEach(b => b.classList.remove('active'));
-                
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                // Get episode data
-                const title = this.getAttribute('data-title');
-                const description = this.getAttribute('data-description');
-                const video = this.getAttribute('data-video');
-                
-                // Update title and description
-                episodeTitle.textContent = title;
-                episodeDescription.textContent = description;
-                
-                // Update video if available
-                if (video) {
-                    mainVideo.src = video;
-                    mainVideo.load();
-                    mainVideo.play().catch(e => {
-                        console.log('Autoplay prevented:', e);
-                    });
-                } else {
-                    // Show message for coming soon episodes
-                    episodeDescription.textContent = description + ' - Coming soon on social media';
-                }
-            });
-        });
-    }
-});
-
-// Story Submission Modal
-const openStoryModalBtn = document.getElementById('openStoryModal');
-const storyModal = document.getElementById('storyModal');
-const closeStoryModalBtns = document.querySelectorAll('.close-modal, .close-modal-btn');
+// Form Handling (if needed for Updates page)
 const storyForm = document.getElementById('storyForm');
-const storyContent = document.getElementById('storyContent');
-const wordCount = document.getElementById('wordCount');
-
-// Open modal
-if (openStoryModalBtn) {
-    openStoryModalBtn.addEventListener('click', () => {
-        storyModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-}
-
-// Close modal
-closeStoryModalBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        storyModal.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-});
-
-// Close modal when clicking outside
-storyModal.addEventListener('click', (e) => {
-    if (e.target === storyModal) {
-        storyModal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-
-// Word count functionality
-if (storyContent && wordCount) {
-    storyContent.addEventListener('input', () => {
-        const text = storyContent.value.trim();
-        const words = text ? text.split(/\s+/).length : 0;
-        wordCount.textContent = words;
-        
-        // Validate word count
-        if (words >= 500 && words <= 2000) {
-            wordCount.classList.remove('invalid');
-            wordCount.classList.add('valid');
-        } else {
-            wordCount.classList.remove('valid');
-            wordCount.classList.add('invalid');
-        }
-    });
-}
-
-// Form submission
 if (storyForm) {
-    storyForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        const title = document.getElementById('storyTitle').value;
-        const author = document.getElementById('authorName').value;
-        const email = document.getElementById('authorEmail').value;
-        const language = document.getElementById('storyLanguage').value;
-        const content = document.getElementById('storyContent').value;
-        const submitBtn = storyForm.querySelector('button[type="submit"]');
-        
-        // Validate word count
-        const words = content.trim().split(/\s+/).length;
-        if (words < 500 || words > 2000) {
-            alert('Your story must be between 500 and 2000 words. Current word count: ' + words);
-            return;
-        }
-        
-        // Show loading state
-        submitBtn.classList.add('loading');
-        submitBtn.disabled = true;
-        
-        // Submit to backend API
-        try {
-            const response = await fetch('http://localhost:5000/api/stories', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    title: title,
-                    author_name: author,
-                    author_email: email,
-                    language: language,
-                    content: content
-                })
-            });
-            
-            const data = await response.json();
-            
-            if (response.ok) {
-                alert('Story submitted successfully! Story ID: ' + data.story_id);
-                
-                // Close modal and reset form
-                storyModal.classList.remove('active');
-                document.body.style.overflow = '';
-                storyForm.reset();
-                wordCount.textContent = '0';
-                wordCount.classList.remove('valid', 'invalid');
-            } else {
-                alert('Error submitting story: ' + data.error);
-            }
-        } catch (error) {
-            console.error('Error submitting story:', error);
-            
-            // Fallback to email if backend is not available
-            alert('Backend server not available. Using email fallback.');
-            
-            const emailBody = `Story Submission - LiklikDrama
+  storyForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
 
-Title: ${title}
-Author: ${author}
-Email: ${email}
-Language: ${language}
-Word Count: ${words}
-
-Story Content:
-${content}`;
-            
-            const mailtoLink = `mailto:info@liklikmedia.com?subject=Story Submission - ${encodeURIComponent(title)}&body=${encodeURIComponent(emailBody)}`;
-            window.location.href = mailtoLink;
-            
-            // Close modal and reset form
-            storyModal.classList.remove('active');
-            document.body.style.overflow = '';
-            storyForm.reset();
-            wordCount.textContent = '0';
-            wordCount.classList.remove('valid', 'invalid');
-        } finally {
-            // Remove loading state
-            submitBtn.classList.remove('loading');
-            submitBtn.disabled = false;
-        }
-    });
+    // Simulate form submission
+    setTimeout(() => {
+      alert('Thank you for your submission!');
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+      this.reset();
+    }, 2000);
+  });
 }
 
-// Button Ripple Effect
-const buttons = document.querySelectorAll('.btn');
-buttons.forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        let x = e.clientX - e.target.getBoundingClientRect().left;
-        let y = e.clientY - e.target.getBoundingClientRect().top;
-        
-        let ripples = document.createElement('span');
-        ripples.style.left = x + 'px';
-        ripples.style.top = y + 'px';
-        ripples.classList.add('ripple');
-        this.appendChild(ripples);
-        
-        setTimeout(() => {
-            ripples.remove();
-        }, 600);
-    });
+// Word count validation
+const textarea = document.querySelector('#storyForm textarea');
+if (textarea) {
+  textarea.addEventListener('input', function() {
+    const wordCount = this.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+    const wordCountElement = document.querySelector('.word-count');
+    if (wordCountElement) {
+      wordCountElement.textContent = `Word count: ${wordCount}`;
+      if (wordCount >= 500 && wordCount <= 2000) {
+        wordCountElement.classList.remove('invalid');
+        wordCountElement.classList.add('valid');
+      } else if (wordCount > 0) {
+        wordCountElement.classList.remove('valid');
+        wordCountElement.classList.add('invalid');
+      }
+    }
+  });
+}
+
+// Active page highlighting
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.nav-link').forEach(link => {
+  const href = link.getAttribute('href');
+  if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+    link.classList.add('active');
+  }
 });
+
+// Video player error handling
+if (mainVideo) {
+  mainVideo.addEventListener('error', function() {
+    console.log('Video not available');
+    const container = this.parentElement;
+    container.innerHTML = '<p style="text-align: center; padding: 2rem; color: #FFD700;">Video not available</p>';
+  });
+}
