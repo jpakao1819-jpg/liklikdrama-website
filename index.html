@@ -29,14 +29,25 @@
     <div class="custom-cursor"></div>
 
     <!-- Hamburger Menu Toggle -->
-    <button class="hamburger-menu" id="hamburger">
+    <button class="hamburger-menu" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
     </button>
 
+    <!-- Navigation Select for Mobile -->
+    <select class="nav-select" id="navSelect" aria-label="Navigate to page">
+        <option value="">Go to page...</option>
+        <option value="index.html">Home</option>
+        <option value="about.html">About</option>
+        <option value="services.html">Services</option>
+        <option value="media.html">Media</option>
+        <option value="updates.html">Updates</option>
+        <option value="contact.html">Contact</option>
+    </select>
+
     <!-- Navigation -->
-    <nav class="main-nav" id="mainNav">
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
         <a href="index.html" class="nav-link active">Home</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="services.html" class="nav-link">Services</a>
@@ -51,7 +62,7 @@
         <section class="hero-section">
             <div class="hero-background"></div>
             <div class="hero-content">
-                <h1 class="hero-title fade-in stagger-1">Local Faces. Real Sales. Real Stories.</h1>
+                <h1 class="hero-title fade-in stagger-1">Local Faces.<br class="mobile-break"> Real Sales.<br class="mobile-break"> Real Stories.</h1>
                 <p class="hero-subtitle fade-in stagger-2">Empowering PNG businesses and storytellers through authentic cultural media</p>
                 <div class="hero-buttons fade-in stagger-3">
                     <a href="services.html" class="btn btn-primary">Promote Your Shop</a>

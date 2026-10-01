@@ -39,6 +39,44 @@
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
+/* Navigation Select Dropdown */
+.nav-select {
+  display: none;
+  position: fixed;
+  right: 60px;
+  top: 12px;
+  z-index: 1001;
+  padding: 0.6rem 1rem;
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  color: var(--pure-white);
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 4px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  padding-right: 2rem;
+}
+
+.nav-select option {
+  background: var(--deep-black);
+  color: var(--pure-white);
+  padding: 0.5rem;
+}
+
+.nav-select:focus {
+  outline: none;
+  border-color: var(--primary-yellow);
+}
+
+/* Mobile line breaks for title */
+.mobile-break {
+  display: none;
+}
+
 /* Tablets and Below (1024px) */
 @media (max-width: 1024px) {
   :root {
@@ -95,12 +133,6 @@
     width: 100%;
     text-align: center;
   }
-
-  .asymmetric-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
 }
 
 /* Mobile Phones (768px and below) */
@@ -116,11 +148,19 @@
   }
 
   html {
-    scroll-padding-top: 50px;
+    scroll-padding-top: 60px;
   }
 
   .hamburger-menu {
     display: flex;
+  }
+
+  .nav-select {
+    display: block;
+  }
+
+  .mobile-break {
+    display: block;
   }
 
   /* Navigation */
@@ -163,8 +203,8 @@
   }
 
   .hero-section {
-    min-height: 70vh;
-    padding: 3rem 1rem 2rem;
+    min-height: auto;
+    padding: 5rem 1rem 2rem;
   }
 
   .hero-background {
@@ -182,6 +222,7 @@
     margin-bottom: 0.8rem;
     line-height: 1.2;
     letter-spacing: 1px;
+    word-spacing: 100vw;
   }
 
   .hero-subtitle {
@@ -282,12 +323,6 @@
     gap: 0.8rem;
   }
 
-  .asymmetric-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
   /* Buttons */
   .hero-buttons {
     flex-direction: column;
@@ -325,15 +360,6 @@
     margin-bottom: 0.8rem;
   }
 
-  .price-large {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    color: var(--primary-yellow);
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
   /* Stats */
   .stat-number {
     font-family: var(--font-serif);
@@ -351,10 +377,7 @@
   }
 
   /* Badges */
-  .update-badge,
-  .coming-soon-badge,
-  .project-status,
-  .job-badge {
+  .update-badge {
     display: inline-block;
     padding: 0.35rem 0.65rem;
     background: var(--primary-yellow);
@@ -475,43 +498,6 @@
     line-height: 1.5;
   }
 
-  /* Background Logo */
-  body::before {
-    background-size: 100%;
-    opacity: 0.04;
-  }
-
-  /* Form Elements */
-  #storyForm input,
-  #storyForm select,
-  #storyForm textarea {
-    font-size: 16px;
-    width: 100%;
-    padding: 0.6rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    color: var(--pure-white);
-    border-radius: 4px;
-    margin-bottom: 0.8rem;
-  }
-
-  .modal-content {
-    width: 95%;
-    max-height: 85vh;
-  }
-
-  .modal-header {
-    padding: 0.8rem;
-  }
-
-  .modal-header h2 {
-    font-size: 1.2rem;
-  }
-
-  .modal-body {
-    padding: 1rem;
-  }
-
   /* Footer */
   .footer-grid {
     flex-direction: column;
@@ -562,75 +548,6 @@
     font-size: 0.7rem;
     margin-top: 0.3rem;
   }
-
-  /* Team Placeholder */
-  .team-placeholder {
-    font-size: 1.8rem;
-    color: var(--primary-yellow);
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-
-  .content-placeholder,
-  .project-placeholder,
-  .video-placeholder,
-  .gallery-placeholder {
-    font-size: 1.8rem;
-    color: var(--primary-yellow);
-    margin-bottom: 0.8rem;
-    text-align: center;
-  }
-
-  .step-number {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    color: var(--primary-yellow);
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-    text-align: center;
-  }
-
-  .client-name {
-    font-style: italic;
-    color: var(--primary-yellow);
-    margin-top: 0.8rem;
-    font-size: 0.8rem;
-  }
-
-  .job-badge {
-    display: inline-block;
-    padding: 0.35rem 0.65rem;
-    background: var(--primary-yellow);
-    color: var(--deep-black);
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-  }
-
-  .job-details {
-    margin: 0.6rem 0;
-    padding: 0.8rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 4px;
-  }
-
-  .job-details p {
-    margin: 0.3rem 0;
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-
-  .job-details strong {
-    color: var(--primary-yellow);
-  }
-
-  .word-count {
-    text-align: right;
-    font-size: 0.75rem;
-    color: var(--off-white);
-    margin-top: 0.3rem;
-  }
 }
 
 /* Extra Small Phones (480px and below) */
@@ -654,13 +571,14 @@
   }
 
   .hero-section {
-    min-height: 65vh;
-    padding: 2.5rem 0.8rem 1.8rem;
+    min-height: auto;
+    padding: 4.5rem 0.8rem 1.8rem;
   }
 
   .hero-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 0.6rem;
+    word-spacing: 100vw;
   }
 
   .hero-subtitle {
@@ -669,7 +587,7 @@
   }
 
   .section-title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     margin-bottom: 0.4rem;
   }
 
@@ -712,10 +630,7 @@
     font-size: 0.7rem;
   }
 
-  .grid-4,
-  .grid-3,
-  .grid-2,
-  .grid {
+  .grid-4, .grid-3, .grid-2, .grid {
     gap: 0.6rem;
   }
 
@@ -727,62 +642,5 @@
   .episode-btn {
     padding: 0.4rem 0.5rem;
     font-size: 0.65rem;
-  }
-
-  .timeline-item {
-    padding: 0.8rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .modal-header h2 {
-    font-size: 1rem;
-  }
-
-  .footer-section h3 {
-    font-size: 0.85rem;
-  }
-
-  .footer-section ul {
-    font-size: 0.75rem;
-  }
-}
-
-/* Landscape Phone Adjustments */
-@media (max-width: 768px) and (orientation: landscape) {
-  main {
-    margin-top: 50px;
-  }
-
-  section {
-    padding: 1.5rem 1rem;
-  }
-
-  .hero-section {
-    min-height: auto;
-    padding: 1.8rem 1rem;
-  }
-
-  .hero-title {
-    font-size: 1.6rem;
-  }
-
-  .grid-4,
-  .grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-  }
-}
-
-/* Touch Device Optimizations */
-@media (hover: none) and (pointer: coarse) {
-  .btn:active {
-    transform: translateY(-2px);
-  }
-
-  .card:active {
-    transform: translateY(-3px);
   }
 }
