@@ -1,490 +1,279 @@
 /**
- * Secret Access Gate & Cloud Controller v3.0
- * 
- * Rules:
- * 1. Code "3"         -> Opens the website to everyone else globally.
- *                        Stays open until the lock code is used.
- * 2. Code "09/07/2003" -> Reboot code. Opens the website ONLY to the Master
- *                        on the specific device where it is entered.
- * 3. Code "05/05/2002" -> Lock code. Locks the website globally for all visitors
- *                        and clients until unlocked again with code "3".
- * 
- * Cross-device trigger:
- * - Triple-tap or triple-click the middle-right 30% of the screen.
- * - Works on Android, iPhone/iPad (Apple), and desktop computers.
+ * LiklikDrama access gate.
+ *
+ * This is a client-side gate, so it is suitable for controlling visibility only.
+ * Do not use the codes here as protection for confidential content.
  */
-
-;(function () {
+(function () {
   "use strict";
 
-  /* -- CONFIGURATION ---------------------------------------- */
-  const CODES = {
-    ACCESS: "3",            // Opens to everyone globally
-    REBOOT: "09/07/2003",   // Opens locally only to Master
-    KILL:   "05/05/2002",   // Locks globally for everyone
-  };
-
-  const CLOUD_CONFIG = {
-    APP_KEY: "7i4f8prd",
-    ITEM_KEY: "site_status",
-    GET_URL: "https://keyvalue.immanuel.co/api/KeyVal/GetValue/7i4f8prd/site_status",
-    SET_URL: "https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/7i4f8prd/site_status/",
-    LOCKED_POLL_INTERVAL_MS: 5000,   // Poll every 5s when locked so client auto-unlocks in real time
-    OPEN_POLL_INTERVAL_MS:   20000,  // Poll every 20s when open to check if Master locked it
-  };
-
-  // Middle-right trigger zone: Right 35% of viewport, middle 50% vertical (25% to 75%)
-  const TRIGGER_ZONE = {
-    xMin: 0.65,
-    xMax: 1.00,
-    yMin: 0.25,
-    yMax: 0.75,
-  };
-
-  const TRIPLE_CLICK_WINDOW_MS = 1200; // Window for 3 cursor clicks
-
-  /* -- PERSISTENT KEYS --------------------------------------- */
-  const KEY_MASTER_SESSION = "__ag_master_session";
-  const KEY_CACHED_STATUS  = "__ag_cached_status";
-
-  /* -- LOCAL STATE ------------------------------------------- */
-  let clickTimes = [];
-  let isOverlayShowing = false;
-  let pollTimer = null;
-
-  /* -- OVERLAY (Locked Screen for Clients) ------------------- */
-  const overlay = document.createElement("div");
-  overlay.id = "ag-overlay";
-  Object.assign(overlay.style, {
-    position:       "fixed",
-    inset:          "0",
-    background:     "#0a0a0a",
-    color:          "#f5f5f5",
-    display:        "none",
-    flexDirection:  "column",
-    alignItems:     "center",
-    justifyContent: "center",
-    zIndex:         "2147483646",
-    fontFamily:     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    userSelect:     "none",
-    transition:     "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-    padding:        "2rem",
-    textAlign:      "center",
-    opacity:        "0",
+  const CODES = Object.freeze({
+    ACCESS: "3",
+    REBOOT: "09/07/2003",
+    KILL: "05/05/2002"
   });
 
-  overlay.innerHTML = `
-    <div style="max-width:480px;display:flex;flex-direction:column;align-items:center;">
-      <div style="width:48px;height:48px;border-radius:50%;background:#1a1a1a;border:1px solid #333;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-      </div>
-      <div style="font-size:clamp(1.4rem, 4vw, 2.2rem);font-weight:700;letter-spacing:0.04em;color:#ffffff;line-height:1.2;">
-        Private Access Only
-      </div>
-      <p style="margin-top:0.85rem;font-size:1rem;color:#8a8a8a;line-height:1.5;max-width:380px;">
-        This portal is restricted to authorized visitors. Access will become available once granted by the administrator.
-      </p>
-    </div>
-  `;
-
-  /* -- POPUP (Master Control Interface) ---------------------- */
-  const popup = document.createElement("div");
-  popup.id = "ag-popup";
-  Object.assign(popup.style, {
-    position:       "fixed",
-    inset:          "0",
-    display:        "none",
-    alignItems:     "center",
-    justifyContent: "center",
-    background:     "rgba(0, 0, 0, 0.8)",
-    backdropFilter: "blur(8px)",
-    WebkitBackdropFilter: "blur(8px)",
-    zIndex:         "2147483647",
-    fontFamily:     "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    padding:        "1.25rem",
-    boxSizing:      "border-box",
+  const CLOUD = Object.freeze({
+    statusUrl: "https://keyvalue.immanuel.co/api/KeyVal/GetValue/7i4f8prd/site_status",
+    updateUrl: "https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/7i4f8prd/site_status/",
+    openPoll: 20000,
+    lockedPoll: 5000,
+    timeout: 5000
   });
 
-  popup.innerHTML = `
-    <div id="ag-card" style="
-      background: #141414;
-      border: 1px solid #2a2a2a;
-      border-radius: 18px;
-      padding: 2.2rem 2.4rem;
-      width: 100%;
-      max-width: 440px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.15rem;
-      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85);
-      position: relative;
-    ">
-      <h2 style="
-        margin: 0;
-        color: #ffffff;
-        font-size: 1.25rem;
-        font-family: 'Times New Roman', Times, Georgia, serif;
-        font-style: italic;
-        font-weight: 500;
-        line-height: 1.45;
-        letter-spacing: 0.02em;
-        text-align: center;
-      ">
-        Master, what faith would you like to befall thy Clients?
-      </h2>
+  const KEYS = Object.freeze({
+    master: "__ag_master_session",
+    status: "__ag_cached_status"
+  });
 
-      <input id="ag-input" type="password" placeholder="Enter decree..." autocomplete="off" autocapitalize="none" style="
-        background: #1e1e1e;
-        border: 1px solid #383838;
-        border-radius: 10px;
-        color: #ffffff;
-        font-size: 1.15rem;
-        padding: 0.75rem 1rem;
-        outline: none;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-        letter-spacing: 0.12em;
-        transition: border-color 0.2s;
-      " />
+  const TRIGGER = Object.freeze({ xMin: 0.65, yMin: 0.25, yMax: 0.75 });
+  const TRIPLE_WINDOW = 1200;
+  let overlay;
+  let popup;
+  let pollTimer;
+  let isLocked = false;
+  let triggerEvents = [];
 
-      <div id="ag-message" style="
-        font-size: 0.88rem;
-        min-height: 1.3em;
-        text-align: center;
-        line-height: 1.4;
-        transition: color 0.2s;
-      "></div>
+  function storageGet(key) {
+    try { return localStorage.getItem(key); } catch (_) { return null; }
+  }
 
-      <div style="display:flex;flex-direction:column;gap:0.6rem;">
-        <button id="ag-submit" style="
-          background: #3b82f6;
-          color: #ffffff;
-          border: none;
-          border-radius: 10px;
-          padding: 0.8rem;
-          font-size: 1rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background 0.2s, transform 0.1s;
-        ">Execute</button>
+  function storageSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (_) { /* private browsing */ }
+  }
 
-        <button id="ag-cancel" style="
-          background: transparent;
-          color: #777777;
-          border: none;
-          font-size: 0.9rem;
-          cursor: pointer;
-          padding: 0.4rem;
-          align-self: center;
-        ">Dismiss</button>
-      </div>
-    </div>
-  `;
+  function storageRemove(key) {
+    try { localStorage.removeItem(key); } catch (_) { /* private browsing */ }
+  }
 
-  /* -- CLOUD SYNC ENGINE ------------------------------------- */
+  function isMaster() {
+    return storageGet(KEYS.master) === "1";
+  }
 
-  async function fetchCloudStatus() {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
+  function makeOverlay() {
+    overlay = document.createElement("div");
+    overlay.id = "ag-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    Object.assign(overlay.style, {
+      position: "fixed", inset: "0", display: "none", opacity: "0",
+      flexDirection: "column", alignItems: "center", justifyContent: "center",
+      zIndex: "2147483646", background: "#0a0a0a", color: "#f5f5f5",
+      padding: "24px", textAlign: "center", fontFamily: "system-ui, sans-serif",
+      transition: "opacity .25s ease", userSelect: "none"
+    });
+    overlay.innerHTML = `
+      <div style="max-width:440px">
+        <div style="font-size:42px;margin-bottom:16px" aria-hidden="true">🔒</div>
+        <h1 style="font-size:clamp(1.5rem,6vw,2.2rem);margin:0;color:#fff">Private Access Only</h1>
+        <p style="color:#999;line-height:1.6;margin:12px 0 0">This portal is temporarily unavailable. Please try again later.</p>
+      </div>`;
+    document.body.appendChild(overlay);
+  }
 
-      // Simple GET request with timestamp to bypass cache, NO custom headers to avoid CORS preflight rejection
-      const res = await fetch(CLOUD_CONFIG.GET_URL + "?_t=" + Date.now(), {
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
+  function makePopup() {
+    popup = document.createElement("div");
+    popup.id = "ag-popup";
+    Object.assign(popup.style, {
+      position: "fixed", inset: "0", display: "none", alignItems: "center",
+      justifyContent: "center", zIndex: "2147483647", padding: "20px",
+      background: "rgba(0,0,0,.82)", backdropFilter: "blur(8px)",
+      fontFamily: "system-ui, sans-serif"
+    });
+    popup.innerHTML = `
+      <form id="ag-card" style="box-sizing:border-box;width:min(440px,100%);padding:28px;background:#141414;border:1px solid #333;border-radius:16px;box-shadow:0 20px 60px #000">
+        <h2 style="margin:0 0 18px;color:#fff;text-align:center;font:italic 500 1.2rem Georgia,serif">Master control</h2>
+        <label for="ag-input" style="display:block;color:#aaa;font-size:.85rem;margin-bottom:7px">Access code</label>
+        <input id="ag-input" type="password" inputmode="text" autocomplete="off" autocapitalize="none" style="box-sizing:border-box;width:100%;padding:13px;border:1px solid #444;border-radius:9px;background:#202020;color:#fff;font-size:1rem;text-align:center;letter-spacing:.12em">
+        <div id="ag-message" role="status" aria-live="polite" style="min-height:22px;margin:12px 0;text-align:center;font-size:.88rem"></div>
+        <button id="ag-submit" type="submit" style="width:100%;padding:13px;border:0;border-radius:9px;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer">Execute</button>
+        <button id="ag-cancel" type="button" style="display:block;margin:10px auto 0;padding:5px;border:0;background:none;color:#999;cursor:pointer">Dismiss</button>
+      </form>`;
+    document.body.appendChild(popup);
 
-      if (res.ok) {
-        const text = await res.text();
-        const cleaned = text.replace(/["'\r\n\s]/g, "").toLowerCase();
-        if (cleaned === "open" || cleaned === "granted") return "open";
-        if (cleaned === "locked" || cleaned === "killed") return "locked";
-      }
-    } catch (err) {
-      console.warn("Cloud status fetch error:", err);
+    popup.querySelector("#ag-card").addEventListener("submit", function (event) {
+      event.preventDefault();
+      handleCode();
+    });
+    popup.querySelector("#ag-cancel").addEventListener("click", closePopup);
+    popup.addEventListener("click", event => {
+      if (event.target === popup) closePopup();
+    });
+  }
+
+  function showOverlay() {
+    if (isMaster() || !overlay) return;
+    isLocked = true;
+    overlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => { overlay.style.opacity = "1"; });
+  }
+
+  function hideOverlay() {
+    if (!overlay) return;
+    isLocked = false;
+    overlay.style.opacity = "0";
+    document.body.style.overflow = "";
+    setTimeout(() => {
+      if (!isLocked) overlay.style.display = "none";
+    }, 260);
+  }
+
+  function openPopup() {
+    if (!popup) return;
+    popup.style.display = "flex";
+    const input = popup.querySelector("#ag-input");
+    popup.querySelector("#ag-message").textContent = "";
+    input.value = "";
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closePopup() {
+    if (!popup) return;
+    popup.style.display = "none";
+    popup.querySelector("#ag-input").value = "";
+    popup.querySelector("#ag-message").textContent = "";
+  }
+
+  function message(text, color = "#ef4444") {
+    const node = popup.querySelector("#ag-message");
+    node.textContent = text;
+    node.style.color = color;
+  }
+
+  function normalizeStatus(value) {
+    if (value && typeof value === "object") {
+      value = value.value ?? value.status ?? value.data;
     }
+    const status = String(value ?? "").replace(/["'\\s]/g, "").toLowerCase();
+    if (["open", "granted", "1", "true"].includes(status)) return "open";
+    if (["locked", "killed", "0", "false"].includes(status)) return "locked";
     return null;
   }
 
-  async function broadcastCloudStatus(status) {
-    const targetWord = (status === "open") ? "open" : "locked";
+  async function request(url, options = {}) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), CLOUD.timeout);
     try {
-      // Simple POST request with body: "1" -- avoid forbidden Content-Length header or custom headers
-      const res = await fetch(CLOUD_CONFIG.SET_URL + targetWord, {
-        method: "POST",
-        body: "1"
-      });
-      return res.ok;
-    } catch (e) {
-      console.warn("Cloud status broadcast error:", e);
+      return await fetch(url, { ...options, signal: controller.signal, cache: "no-store" });
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  async function fetchCloudStatus() {
+    try {
+      const response = await request(`${CLOUD.statusUrl}?_=${Date.now()}`);
+      if (!response.ok) return null;
+      const text = await response.text();
+      try { return normalizeStatus(JSON.parse(text)); } catch (_) { return normalizeStatus(text); }
+    } catch (error) {
+      console.warn("Access gate status unavailable:", error.message);
+      return null;
+    }
+  }
+
+  async function setCloudStatus(status) {
+    try {
+      const response = await request(`${CLOUD.updateUrl}${status}`, { method: "POST", body: "1" });
+      return response.ok;
+    } catch (error) {
+      console.warn("Access gate update unavailable:", error.message);
       return false;
     }
   }
 
-  /* -- OVERLAY DISPLAY HELPERS ------------------------------- */
-
-  function isMasterUnlocked() {
-    return localStorage.getItem(KEY_MASTER_SESSION) === "1";
-  }
-
-  function showOverlay() {
-    // If master unlocked locally, never lock their screen
-    if (isMasterUnlocked()) return;
-
-    if (!isOverlayShowing) {
-      isOverlayShowing = true;
-      overlay.style.display = "flex";
-      // Trigger smooth fade in on next frame
-      requestAnimationFrame(() => {
-        overlay.style.opacity = "1";
-      });
-    }
-  }
-
-  function hideOverlay() {
-    if (isOverlayShowing) {
-      isOverlayShowing = false;
-      overlay.style.opacity = "0";
-      setTimeout(() => {
-        if (!isOverlayShowing) {
-          overlay.style.display = "none";
-        }
-      }, 500);
-    }
-  }
-
-  function openPopup() {
-    popup.style.display = "flex";
-    const input = popup.querySelector("#ag-input");
-    const msg = popup.querySelector("#ag-message");
-    if (input) {
-      input.value = "";
-      setTimeout(() => input.focus(), 60);
-    }
-    if (msg) msg.textContent = "";
-  }
-
-  function closePopup() {
-    popup.style.display = "none";
-    const input = popup.querySelector("#ag-input");
-    const msg = popup.querySelector("#ag-message");
-    if (input) input.value = "";
-    if (msg) msg.textContent = "";
-  }
-
-  function setMessage(text, color = "#ef4444") {
-    const msg = popup.querySelector("#ag-message");
-    if (msg) {
-      msg.style.color = color;
-      msg.textContent = text;
-    }
-  }
-
-  /* -- AUTO-SYNC LOOP ---------------------------------------- */
-
-  async function syncStatus() {
-    // Master session always takes precedence locally
-    if (isMasterUnlocked()) {
-      hideOverlay();
-      return;
-    }
-
-    const cloud = await fetchCloudStatus();
-
-    if (cloud === "open") {
-      localStorage.setItem(KEY_CACHED_STATUS, "open");
-      hideOverlay();
-      resetPollTimer(CLOUD_CONFIG.OPEN_POLL_INTERVAL_MS);
-    } else if (cloud === "locked") {
-      localStorage.setItem(KEY_CACHED_STATUS, "locked");
-      showOverlay();
-      resetPollTimer(CLOUD_CONFIG.LOCKED_POLL_INTERVAL_MS);
-    }
-  }
-
-  function resetPollTimer(interval) {
-    if (pollTimer) clearInterval(pollTimer);
+  function schedulePoll(interval) {
+    clearInterval(pollTimer);
     pollTimer = setInterval(syncStatus, interval);
   }
 
-  /* -- CODE ACTIONS ------------------------------------------ */
-
-  /**
-   * Code "3": Opens website to everyone else globally.
-   * Stays open until the lock code is executed.
-   */
-  async function handlePublicOpen() {
-    setMessage("Broadcasting decree: Opening to all clients...", "#60a5fa");
-    const submitBtn = popup.querySelector("#ag-submit");
-    if (submitBtn) submitBtn.disabled = true;
-
-    await broadcastCloudStatus("open");
-
-    localStorage.setItem(KEY_CACHED_STATUS, "open");
-    hideOverlay();
-
-    setMessage("Decree enacted. Website is now open globally for all clients.", "#4ade80");
-
-    setTimeout(() => {
-      if (submitBtn) submitBtn.disabled = false;
-      closePopup();
-      resetPollTimer(CLOUD_CONFIG.OPEN_POLL_INTERVAL_MS);
-    }, 1300);
-  }
-
-  /**
-   * Code "09/07/2003": Reboot code.
-   * Opens ONLY to the Master on the current device.
-   * Does not broadcast to public cloud (clients remain locked).
-   */
-  function handleMasterReboot() {
-    setMessage("Reboot decree recognized. Granting Master access on this device...", "#fbbf24");
-    const submitBtn = popup.querySelector("#ag-submit");
-    if (submitBtn) submitBtn.disabled = true;
-
-    // Save master session on this device
-    localStorage.setItem(KEY_MASTER_SESSION, "1");
-    hideOverlay();
-
-    setMessage("Reboot complete. Master access granted locally.", "#4ade80");
-
-    setTimeout(() => {
-      if (submitBtn) submitBtn.disabled = false;
-      closePopup();
-    }, 1200);
-  }
-
-  /**
-   * Code "05/05/2002": Lock / Kill switch.
-   * Locks website globally for all visitors and clients worldwide.
-   */
-  async function handleGlobalLock() {
-    setMessage("Lock decree recognized. Locking website for all clients...", "#f87171");
-    const submitBtn = popup.querySelector("#ag-submit");
-    if (submitBtn) submitBtn.disabled = true;
-
-    await broadcastCloudStatus("locked");
-
-    // Clear local master privilege and cache
-    localStorage.removeItem(KEY_MASTER_SESSION);
-    localStorage.setItem(KEY_CACHED_STATUS, "locked");
-
-    showOverlay();
-
-    setMessage("Decree enacted. Website is now locked for all clients worldwide.", "#ef4444");
-
-    setTimeout(() => {
-      if (submitBtn) submitBtn.disabled = false;
-      closePopup();
-      resetPollTimer(CLOUD_CONFIG.LOCKED_POLL_INTERVAL_MS);
-    }, 1300);
+  async function syncStatus() {
+    if (isMaster()) {
+      hideOverlay();
+      return;
+    }
+    const cloudStatus = await fetchCloudStatus();
+    if (cloudStatus) storageSet(KEYS.status, cloudStatus);
+    const status = cloudStatus || storageGet(KEYS.status);
+    if (status === "locked") {
+      showOverlay();
+      schedulePoll(CLOUD.lockedPoll);
+    } else if (status === "open") {
+      hideOverlay();
+      schedulePoll(CLOUD.openPoll);
+    } else {
+      // A new visitor is not blocked while the cloud service is unreachable.
+      hideOverlay();
+      schedulePoll(CLOUD.openPoll);
+    }
   }
 
   async function handleCode() {
     const input = popup.querySelector("#ag-input");
-    if (!input) return;
-    const val = input.value.trim();
+    const submit = popup.querySelector("#ag-submit");
+    const value = input.value.trim();
+    if (!value) return message("Enter an access code.");
+    submit.disabled = true;
 
-    if (val === CODES.ACCESS) {
-      await handlePublicOpen();
-    } else if (val === CODES.REBOOT) {
-      handleMasterReboot();
-    } else if (val === CODES.KILL) {
-      await handleGlobalLock();
-    } else {
-      setMessage("Incorrect decree.", "#ef4444");
-      input.value = "";
-      input.focus();
+    try {
+      if (value === CODES.REBOOT) {
+        storageSet(KEYS.master, "1");
+        hideOverlay();
+        message("Master access granted on this device.", "#4ade80");
+        setTimeout(closePopup, 900);
+      } else if (value === CODES.ACCESS) {
+        message("Opening the website...", "#60a5fa");
+        if (!(await setCloudStatus("open"))) throw new Error("The access service did not accept the update.");
+        storageSet(KEYS.status, "open");
+        hideOverlay();
+        message("Website opened for all visitors.", "#4ade80");
+        setTimeout(closePopup, 900);
+        schedulePoll(CLOUD.openPoll);
+      } else if (value === CODES.KILL) {
+        message("Locking the website...", "#f87171");
+        if (!(await setCloudStatus("locked"))) throw new Error("The access service did not accept the update.");
+        storageRemove(KEYS.master);
+        storageSet(KEYS.status, "locked");
+        showOverlay();
+        message("Website locked for all visitors.", "#4ade80");
+        setTimeout(closePopup, 900);
+        schedulePoll(CLOUD.lockedPoll);
+      } else {
+        message("Incorrect access code.");
+        input.value = "";
+      }
+    } catch (error) {
+      message(error.message || "Unable to update access status.");
+    } finally {
+      submit.disabled = false;
     }
   }
 
-  /* -- 3 CURSOR CLICKS DETECTOR ----------------------------- */
-
-  function inZone(e) {
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    const rx = e.clientX / vw;
-    const ry = e.clientY / vh;
-    return (
-      rx >= TRIGGER_ZONE.xMin && rx <= TRIGGER_ZONE.xMax &&
-      ry >= TRIGGER_ZONE.yMin && ry <= TRIGGER_ZONE.yMax
-    );
+  function inTriggerZone(event) {
+    return event.clientX / window.innerWidth >= TRIGGER.xMin &&
+      event.clientY / window.innerHeight >= TRIGGER.yMin &&
+      event.clientY / window.innerHeight <= TRIGGER.yMax;
   }
 
-  document.addEventListener("click", function (e) {
-    // Only primary (left) button clicks
-    if (e.button !== 0 && e.button !== undefined) return;
-
-    // Ignore clicks if decree popup is already visible
-    if (popup.style.display === "flex") return;
-
-    // Check if cursor clicked in middle-right zone
-    if (!inZone(e)) return;
-
+  function registerTrigger(event) {
+    if (popup.style.display === "flex" || !inTriggerZone(event)) return;
     const now = Date.now();
-    clickTimes.push(now);
-
-    // Filter to retain clicks within 1200ms
-    clickTimes = clickTimes.filter(t => now - t <= TRIPLE_CLICK_WINDOW_MS);
-
-    // Trigger on 3 cursor clicks
-    if (clickTimes.length >= 3) {
-      clickTimes = [];
+    triggerEvents = triggerEvents.filter(time => now - time <= TRIPLE_WINDOW);
+    triggerEvents.push(now);
+    if (triggerEvents.length >= 3) {
+      triggerEvents = [];
       openPopup();
     }
-  }, true); // Capture mode: ensures click is captured even when overlay is present
-
-  /* -- INITIALIZATION ---------------------------------------- */
+  }
 
   function init() {
-    document.body.appendChild(overlay);
-    document.body.appendChild(popup);
-
-    const btn = popup.querySelector("#ag-submit");
-    const cancel = popup.querySelector("#ag-cancel");
-    const input = popup.querySelector("#ag-input");
-
-    if (btn) btn.addEventListener("click", handleCode);
-    if (cancel) cancel.addEventListener("click", closePopup);
-
-    if (input) {
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") handleCode();
-        if (e.key === "Escape") closePopup();
-      });
-
-      input.addEventListener("focus", () => {
-        input.style.borderColor = "#3b82f6";
-      });
-      input.addEventListener("blur", () => {
-        input.style.borderColor = "#383838";
-      });
-    }
-
-    // Determine initial visual state smoothly:
-    // If master unlocked locally, or cached state is 'open', keep screen visible!
-    // If explicitly cached as locked, show overlay immediately.
-    // If fresh visitor (no cache yet), default to open while verifying cloud decree in background!
-    if (isMasterUnlocked() || localStorage.getItem(KEY_CACHED_STATUS) === "open") {
-      hideOverlay();
-    } else if (localStorage.getItem(KEY_CACHED_STATUS) === "locked") {
-      showOverlay();
-    } else {
-      hideOverlay();
-    }
-
-    // Run first sync immediately and start polling
+    makeOverlay();
+    makePopup();
+    document.addEventListener("pointerup", registerTrigger, true);
     syncStatus();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();
