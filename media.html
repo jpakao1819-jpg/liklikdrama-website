@@ -7,6 +7,7 @@
     <meta name="description" content="Explore LiklikDrama's media showcase: monthly contents, movie projects, promotional videos, and gallery.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -26,8 +27,25 @@
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
 
-    <!-- Surprising Navigation - Vertical Right Side -->
-    <nav class="main-nav">
+    <!-- Hamburger Menu Toggle -->
+    <button class="hamburger-menu" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Navigation Select for Mobile -->
+    <select class="nav-select" id="navSelect">
+        <option value="index.html">Home</option>
+        <option value="about.html">About</option>
+        <option value="services.html">Services</option>
+        <option value="media.html">Media</option>
+        <option value="updates.html">Updates</option>
+        <option value="contact.html">Contact</option>
+    </select>
+
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
         <a href="index.html" class="nav-link">Home</a>
         <a href="about.html" class="nav-link">About</a>
         <a href="services.html" class="nav-link">Services</a>
@@ -88,8 +106,8 @@
             <div class="card fade-in">
                 <div class="video-wrapper">
                     <div class="video-container">
-                        <video id="main-video" controls playsinline preload="auto">
-                            <source src="Love & Coconut Trailer/Coconut Drama Trailer.mp4" type="video/mp4">
+                        <video id="main-video" controls playsinline preload="metadata">
+                            <source src="Love &amp; Coconut Trailer/Coconut Drama Trailer.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -101,7 +119,7 @@
             <div class="episode-selector fade-in" style="margin-top: 2rem;">
                 <h3>Select Episode</h3>
                 <div class="episode-buttons">
-                    <button class="episode-btn active" data-episode="trailer" data-title="Trailer" data-description="Watch the official trailer for Love & Coconut" data-video="Love & Coconut Trailer/Coconut Drama Trailer.mp4">Trailer</button>
+                    <button class="episode-btn active" data-episode="trailer" data-title="Trailer" data-description="Watch the official trailer for Love &amp; Coconut" data-video="Love &amp; Coconut Trailer/Coconut Drama Trailer.mp4">Trailer</button>
                     <button class="episode-btn" data-episode="1" data-title="Episode 1" data-description="The Beginning" data-video="">Episode 1</button>
                     <button class="episode-btn" data-episode="2" data-title="Episode 2" data-description="Coming Soon" data-video="">Episode 2</button>
                     <button class="episode-btn" data-episode="3" data-title="Episode 3" data-description="Coming Soon" data-video="">Episode 3</button>
