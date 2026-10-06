@@ -1,4 +1,4 @@
-﻿// Main Script for LiklikDrama Website
+// Main Script for LiklikDrama Website
 'use strict';
 
 // Mobile Navigation Toggle
@@ -161,5 +161,13 @@ document.querySelectorAll('.nav-link').forEach(link => {
   const href = link.getAttribute('href');
   if (href === currentPage || (currentPage === '' && href === 'index.html')) {
     link.classList.add('active');
+  }
+});
+
+// Ensure active nav link is visible in across navigation on mobile
+window.addEventListener('DOMContentLoaded', function() {
+  const activeLink = document.querySelector('.main-nav .nav-link.active');
+  if (activeLink && window.innerWidth <= 768) {
+    activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }
 });

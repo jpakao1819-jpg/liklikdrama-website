@@ -1,23 +1,7 @@
 /* LiklikDrama Website - Mobile Responsive Overrides */
 
 /* Hamburger Menu Styles */
-.hamburger-menu {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.75rem;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 1001;
-  width: 50px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-}
+.hamburger-menu { display: none !important; }
 
 .hamburger-menu span {
   width: 22px;
@@ -40,26 +24,7 @@
 }
 
 /* Navigation Select Dropdown */
-.nav-select {
-  display: none;
-  position: fixed;
-  right: 60px;
-  top: 12px;
-  z-index: 1001;
-  padding: 0.6rem 1rem;
-  background: rgba(0, 0, 0, 0.95);
-  border: 1px solid rgba(255, 215, 0, 0.5);
-  color: var(--pure-white);
-  font-family: var(--font-serif);
-  font-size: 0.85rem;
-  cursor: pointer;
-  border-radius: 4px;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFD700' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.8rem center;
-  padding-right: 2rem;
-}
+.nav-select { display: none !important; }
 
 .nav-select option {
   background: var(--deep-black);
@@ -151,13 +116,9 @@
     scroll-padding-top: 60px;
   }
 
-  .hamburger-menu {
-    display: flex;
-  }
+  .hamburger-menu { display: none !important; }
 
-  .nav-select {
-    display: block;
-  }
+  .nav-select { display: none !important; }
 
   .mobile-break {
     display: block;
